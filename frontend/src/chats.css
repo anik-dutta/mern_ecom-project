@@ -1,0 +1,97 @@
+.chat-btn {
+    background-color: rgb(23, 1, 51);
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    font-size: 24px;
+    position: fixed;
+    right: 20px;
+    bottom: 40px;
+    width: 42px;
+    height: 42px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-btn .close {
+    display: none;
+}
+
+#check:checked~.chat-btn i {
+    display: block;
+    font-size: 30px;
+}
+
+#check:checked~.chat-btn .comment {
+    display: none;
+}
+
+#check {
+    display: none !important;
+}
+
+#check:checked~.chat-wrapper {
+    opacity: 1;
+}
+
+.chat-wrapper {
+    opacity: 0;
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
+    z-index: 2;
+    width: 300px;
+    transition: all 0.4s;
+    background-color: white;
+    border-radius: 5px;
+    border: 0.5px solid rgb(163, 238, 238);
+}
+
+.chat-header {
+    background-color: rgb(23, 1, 51);
+    padding: 11px;
+    margin-bottom: 5px;
+    border-radius: 5px 5px 0px 0px;
+    color: cyan;
+}
+
+.chat-form {
+    padding: 12px;
+}
+
+.chat-form textarea {
+    resize: none;
+}
+
+.form-control:focus,
+.btn:focus {
+    box-shadow: none;
+}
+
+.chat-msg {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.chat-text {
+    border-radius: 0.65rem;
+    padding: 9.2px;
+    background-color: rgb(23, 1, 51);
+    font-size: 15px;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    color: cyan;
+    line-height: 1.3rem;
+}
+
+.notification {
+    padding: 0.35rem;
+}
+
+.admin-toast {
+    padding: 0;
+    margin: 0 20px 10px 15px;
+    width: 300px;
+}
