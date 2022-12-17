@@ -1,8 +1,8 @@
 // external import
-import axios from "axios";
+import axios from 'axios';
 
 // internal import
-import OrdersPageComponent from "./adminPageComponents/OrdersPageComponent";
+import OrdersPageComponent from './adminPageComponents/OrdersPageComponent';
 
 const getOrders = async () => {
     const { data } = await axios.get('/api/orders/admin');

@@ -1,12 +1,12 @@
 // external import
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 // internal import
 import HomePageComponent from './pageComponents/HomePageComponent';
 
 const getBestsellers = async () => {
-    const { data } = await axios.get("/api/products/bestsellers");
+    const { data } = await axios.get('/api/products/bestsellers');
     return data;
 };
 

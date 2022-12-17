@@ -9,7 +9,9 @@ import { changeCategory, setValuesForAttrFromDBSelectForm, setAttributesTableWra
 
 const onHover = { cursor: 'pointer', position: 'absolute', left: '5px', top: '-10px', transform: 'scale(2.0)' };
 
-export default function EditProductPageComponent({ categories, fetchProduct, updateProductApiRequest, reduxDispatch, saveAttributeToCategory, imageDeleteHandler, imageUploadHandler, uploadImagesApiRequest, uploadImagesCloudinaryApiRequest }) {
+export default function EditProductPageComponent(props) {
+    const { categories, fetchProduct, updateProductApiRequest, reduxDispatch, saveAttributeToCategory, imageDeleteHandler, uploadImagesApiRequest, uploadImagesCloudinaryApiRequest } = props;
+
     const [validated, setValidated] = useState(false);
     const [product, setProduct] = useState({});
     const [updateProductResponseState, setUpdateProductResponseState] = useState({ message: '', error: '' });
@@ -86,7 +88,7 @@ export default function EditProductPageComponent({ categories, fetchProduct, upd
     };
 
     const attributeValueSelected = (e) => {
-        if (e.target.value !== "Choose attribute value") {
+        if (e.target.value !== 'Choose attribute value') {
             setAttributesTableWrapper(attrKey.current.value, e.target.value, setAttributesTable);
         }
     };
@@ -96,7 +98,7 @@ export default function EditProductPageComponent({ categories, fetchProduct, upd
     };
 
     const checkKeyDown = (e) => {
-        if (e.code === "Enter") {
+        if (e.code === 'Enter') {
             e.preventDefault();
         }
     };
@@ -118,9 +120,9 @@ export default function EditProductPageComponent({ categories, fetchProduct, upd
             if (newAttrKey && newAttrValue) {
                 reduxDispatch(saveAttributeToCategory(newAttrKey, newAttrValue, categoryChosen));
                 setAttributesTableWrapper(newAttrKey, newAttrValue, setAttributesTable);
-                e.target.value = "";
-                createdNewAttrKey.current.value = "";
-                createdNewAttrVal.current.value = "";
+                e.target.value = '';
+                createdNewAttrKey.current.value = '';
+                createdNewAttrVal.current.value = '';
                 setNewAttrKey(false);
                 setNewAttrValue(false);
             }
@@ -129,33 +131,34 @@ export default function EditProductPageComponent({ categories, fetchProduct, upd
 
     const removeImageHandler = (imagePath, id) => {
         imageDeleteHandler(imagePath, id)
-            .then(result => setImageRemoved(!imageRemoved));
+            .then(result => {
+                setImageRemoved(!imageRemoved);
+            });
     };
 
     const uploadImageHandeler = (images, id) => {
-        if (images.length > 3) {
-            setIsUploading('Maximum 3 images can be uploaded at once');
-        } else {
-            setIsUploading('Uploading file(s) in progress...');
-            if (process.env.NODE_ENV !== 'production') {
-                uploadImagesApiRequest(images, id)
-                    .then(result => {
-                        setIsUploading('File(s) uploaded');
-                        setImageUploaded(!imageUploaded);
-                    })
-                    .catch(err => {
-                        setIsUploading(err.response.data.message ? err.response.data.message : err.response.data);
-                    });
-            } else {
-                uploadImagesCloudinaryApiRequest(images, id);
-
-                setTimeout(() => {
-                    setIsUploading('File(s) uploaded. Wait few seconds for the result to take effect.');
+        if (process.env.NODE_ENV !== 'production') {
+            uploadImagesApiRequest(images, id)
+                .then(result => {
+                    setIsUploading('File(s) uploaded');
                     setImageUploaded(!imageUploaded);
+                })
+                .catch(err => {
+                    setIsUploading(err.response.data.message ? err.response.data.message : err.response.data);
+                });
+        } else {
+            const data = uploadImagesCloudinaryApiRequest(images, id);
+            if (!data.length && !data.size && !data.type) {
+                setIsUploading('Uploading file(s) in progress...');
+                setTimeout(() => {
+                    setIsUploading('File(s) uploaded. Refresh to see the result.');
                 }, 5000);
-
+                setImageUploaded(!imageUploaded);
+            } else {
+                let showError = data.length + data.size + data.type;
+                setIsUploading(showError);
             }
-        }
+        };
     };
 
     return (
@@ -201,12 +204,7 @@ export default function EditProductPageComponent({ categories, fetchProduct, upd
                                     <Col md={6}>
                                         <Form.Group className="mb-3" controlId="formBasicAttributes">
                                             <Form.Label>Choose atrribute & set value</Form.Label>
-                                            <Form.Select
-                                                name="atrrKey"
-                                                aria-label="Default select example"
-                                                ref={attrKey}
-                                                onChange={(e) => setValuesForAttrFromDBSelectForm(e, attrVal, attributesFromDB)}
-                                            >
+                                            <Form.Select name="atrrKey" aria-label="Default select example" ref={attrKey} onChange={(e) => setValuesForAttrFromDBSelectForm(e, attrVal, attributesFromDB)}>
                                                 <option>Choose attribute</option>
                                                 {attributesFromDB.map((item, idx) => (
                                                     <Fragment key={idx}>
@@ -281,24 +279,23 @@ export default function EditProductPageComponent({ categories, fetchProduct, upd
                             </Alert>
                             <Form.Group controlId="formFileMultiple" className="mb-3">
                                 <Form.Label>Images</Form.Label>
-                                <Row className="ps-1 pe-1 mb-3">
+                                <Row className="ps-1 pe-1 mb-2 mt-1">
                                     {product.images && product.images.map((image, idx) => (
-                                        <Col key={idx} style={{ position: "relative" }} xs={3} className="mb-1">
+                                        <Col key={idx} style={{ position: 'relative' }} xs={3} className="mb-2">
                                             <Image crossOrigin="anonymous" src={image.path ? image.path : null} fluid />
-                                            <i style={onHover}
-                                                onClick={() => removeImageHandler(image.path, id)}
-                                                className="bi bi-x text-danger" />
+                                            <i style={onHover} onClick={() => removeImageHandler(image.path, id)} className="bi bi-x text-danger" />
                                         </Col>
                                     ))}
                                 </Row>
                                 <Form.Control type="file" multiple onChange={(e) => uploadImageHandeler(e.target.files, id)} />
+                                <Form.Text className="text-muted">Image file(s) should be of JPEG/JPG/PNG type and maximum 1 MB in size.</Form.Text>
                             </Form.Group>
 
                             {isUploading && <Alert variant="info">{isUploading}</Alert>}
 
-                            <Button className="mt-3 btn-info" type="submit">Update</Button>
+                            <Button className="mt-3 btn-warning" type="submit">Update</Button>
 
-                            {updateProductResponseState.error && <Alert variant="danger">{updateProductResponseState.error}</Alert>}
+                            {updateProductResponseState.error && <Alert variant="danger" className="mt-2">{updateProductResponseState.error}</Alert>}
                         </Form>
                     </Col>
                 </Row>

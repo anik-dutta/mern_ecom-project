@@ -1,9 +1,9 @@
-const ObjectId = require("mongodb").ObjectId;
+const ObjectId = require('mongodb').ObjectId;
 
 const orders = Array.from({ length: 22 }).map((_, idx) => {
     let day = 20;
     if (idx < 10) {
-        var hour = "0" + idx;
+        var hour = '0' + idx;
         var subtotal = 100;
     } else if (idx > 16 && idx < 21) {
         var hour = idx;
@@ -20,14 +20,14 @@ const orders = Array.from({ length: 22 }).map((_, idx) => {
         },
         cartItems: [
             {
-                name: "Product name",
+                name: 'Product name',
                 price: 34,
-                image: { path: "/images/tablets-category.png" },
+                image: { path: '/images/tablets-category.png' },
                 quantity: 3,
                 count: 12
             }
         ],
-        paymentMethod: "PayPal",
+        paymentMethod: 'PayPal',
         isPaid: false,
         isDelivered: false,
         createdAt: `2022-03-${day}T${hour}:12:36.490+00:00`

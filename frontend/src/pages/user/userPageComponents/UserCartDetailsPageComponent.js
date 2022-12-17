@@ -1,13 +1,14 @@
 // external imports
-import { Container, Row, Col, Form, Alert, ListGroup, Button } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { Container, Row, Col, Form, Alert, ListGroup, Button } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // internal imports
 import CardItemComponent from '../../../components/CardItemComponent';
-import MetaComponent from "../../../components/MetaComponent";
+import MetaComponent from '../../../components/MetaComponent';
 
-export default function UserCartDetailsPageComponent({ cartItems, cartSubtotal, itemsCount, userInfo, reduxDispatch, addToCart, removeFromCart, getUser, createOrder }) {
+export default function UserCartDetailsPageComponent(props) {
+    const { cartItems, cartSubtotal, itemsCount, userInfo, reduxDispatch, addToCart, removeFromCart, getUser, createOrder } = props;
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [user, setUser] = useState({});
@@ -37,7 +38,7 @@ export default function UserCartDetailsPageComponent({ cartItems, cartSubtotal, 
     };
 
     const removeFromCartHandler = (productID, quantity, price) => {
-        if (window.confirm('Removing the product from your cart. Press "Ok" to confirm.')) {
+        if (window.confirm('Removing the product from your cart. Press \'Ok\' to confirm.')) {
             reduxDispatch(removeFromCart(productID, quantity, price));
         }
     };
@@ -99,7 +100,6 @@ export default function UserCartDetailsPageComponent({ cartItems, cartSubtotal, 
                                 <h5>Payment Method</h5>
                                 <Form.Select onChange={choosePayment}>
                                     <option value="pp">PayPal</option>
-                                    <option value="visa">Visa</option>
                                     <option value="cod">Cash on Delivery (delivery may be delayed)</option>
                                 </Form.Select>
                             </Col>

@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 
 // internal imports
 import EditProductPageComponent from "./adminPageComponents/EditProductPageComponent";
-// import EditProductPageComponent from './adminPageComponents/EditProductPageComponentCOPY';
 import { saveAttributeToCategory } from '../../redux/actions/categoryActions';
 import { uploadImagesApiRequest, uploadImagesCloudinaryApiRequest } from "./utils/utils";
 

@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken');
 
 // internal imports
 const productRoutes = require('./productRoutes');
-const categoryRoutes = require("./categoryRoutes");
-const userRoutes = require("./userRoutes");
-const orderRoutes = require("./orderRoutes");
+const categoryRoutes = require('./categoryRoutes');
+const userRoutes = require('./userRoutes');
+const orderRoutes = require('./orderRoutes');
 
 // starting sub-app 'api'
 const api = express();
@@ -27,8 +27,8 @@ api.get('/logout', (req, res) => {
 });
 
 api.use('/products', productRoutes);
-api.use("/categories", categoryRoutes);
-api.use("/users", userRoutes);
-api.use("/orders", orderRoutes);
+api.use('/categories', categoryRoutes);
+api.use('/users', userRoutes);
+api.use('/orders', orderRoutes);
 
 module.exports = api;

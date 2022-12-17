@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // internal import
-import * as actionTypes from "../constants/categoryConstants";
+import * as actionTypes from '../constants/categoryConstants';
 
 export const getCategories = () => async (dispatch) => {
     const { data } = await axios.get('/api/categories');
@@ -25,7 +25,7 @@ export const saveAttributeToCategory = (key, val, categoryChosen) => async (disp
 
 export const newCategory = (category) => async (dispatch, getState) => {
     const cat = getState().getCategories.categories;
-    const { data } = await axios.post("/api/categories", { category });
+    const { data } = await axios.post('/api/categories', { category });
     if (data.categoryCreated) {
         dispatch({
             type: actionTypes.INSERT_CATEGORY,

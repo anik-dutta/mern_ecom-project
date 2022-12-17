@@ -1,10 +1,10 @@
 // external imports
-import { useSelector } from "react-redux";
-import axios from "axios";
-import { loadScript } from "@paypal/paypal-js";
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { loadScript } from '@paypal/paypal-js';
 
 // internal import
-import UserOrderDetailsPageComponent from "./userPageComponents/UserOrderDetailsPageComponent";
+import UserOrderDetailsPageComponent from './userPageComponents/UserOrderDetailsPageComponent';
 
 const getUser = async (userId) => {
     const { data } = await axios.get(`/api/users/profile/${userId}`);
@@ -17,7 +17,7 @@ const getOrder = async (orderId) => {
 };
 
 const loadPayPalScript = (cartSubtotal, cartItems, orderId, updateStateAfterOrder) => {
-    loadScript({ 'client-id': 'AZ1it_RbQniW9ck15SCXu25OyKQGxZv8d2UgNxxqa94pWTGrLVwzQdwtGxAxqOorO9pMx1xIu_doO-lz' })
+    loadScript({ 'client-id': process.env.REACT_APP_PAYPAL_CLIENT_ID })
         .then(paypal => {
             paypal
                 .Buttons(buttons(cartSubtotal, cartItems, orderId, updateStateAfterOrder))
@@ -25,7 +25,7 @@ const loadPayPalScript = (cartSubtotal, cartItems, orderId, updateStateAfterOrde
 
         })
         .catch(err => {
-            console.error("failed to load the PayPal JS SDK script", err);
+            console.error('failed to load the PayPal JS SDK script', err);
         });
 };
 
@@ -39,7 +39,7 @@ const buttons = (cartSubtotal, cartItems, orderId, updateStateAfterOrder) => {
                             value: cartSubtotal,
                             breakdown: {
                                 item_total: {
-                                    currency_code: "USD",
+                                    currency_code: 'USD',
                                     value: cartSubtotal,
                                 }
                             }
@@ -48,7 +48,7 @@ const buttons = (cartSubtotal, cartItems, orderId, updateStateAfterOrder) => {
                             return {
                                 name: product.name,
                                 unit_amount: {
-                                    currency_code: "USD",
+                                    currency_code: 'USD',
                                     value: product.price,
                                 },
                                 quantity: product.quantity,
@@ -63,7 +63,7 @@ const buttons = (cartSubtotal, cartItems, orderId, updateStateAfterOrder) => {
             return actions.order.capture().then(function (orderData) {
                 var transaction = orderData.purchase_units[0].payments.captures[0];
 
-                if (transaction.status === "COMPLETED" && Number(transaction.amount.value) === Number(cartSubtotal)) {
+                if (transaction.status === 'COMPLETED' && Number(transaction.amount.value) === Number(cartSubtotal)) {
                     updateOrder(orderId).then(result => {
                         if (result.isPaid) {
                             updateStateAfterOrder(result.paidAt);
@@ -79,11 +79,11 @@ const buttons = (cartSubtotal, cartItems, orderId, updateStateAfterOrder) => {
 };
 
 const onCancelHandler = function () {
-    console.log("cancel");
+    console.log('cancel');
 };
 
 const onErrorHandler = function (err) {
-    console.log("error");
+    console.log('error');
 };
 
 const updateOrder = async (orderId) => {

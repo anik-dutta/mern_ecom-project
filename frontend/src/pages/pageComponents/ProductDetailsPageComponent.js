@@ -6,11 +6,12 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 // internal imports
-import AddedToCartMessageComponent from "../../components/AddedToCartMessageComponent";
+import AddedToCartMessageComponent from '../../components/AddedToCartMessageComponent';
 import MetaComponent from '../../components/MetaComponent';
 
-export default function ProductDetailsPageComponent({ addToCartReduxAction, reduxDispatch, getProductDetails, userInfo, writeReviewApiRequest }) {
-    const { id } = useParams();
+export default function ProductDetailsPageComponent(props) {
+    const { addToCartReduxAction, reduxDispatch, getProductDetails, userInfo, writeReviewApiRequest } = props;
+
     const [quantity, setQuantity] = useState(1);
     const [showCartMessage, setShowCartMessage] = useState(false);
     const [product, setProduct] = useState([]);
@@ -18,15 +19,12 @@ export default function ProductDetailsPageComponent({ addToCartReduxAction, redu
     const [error, setError] = useState(false);
     const [productReviewed, setProductReviewed] = useState(false);
 
+    const { id } = useParams();
     const messageEndRef = useRef();
 
     useEffect(() => {
         if (product.images) {
             var options = {
-                // width: 400,
-                // zoomWidth: 500,
-                // fillContainer: true,
-                // zoomPosition: "bottom",
                 scale: 2,
                 offset: { vertical: 0, horizontal: 0 },
             };
@@ -92,7 +90,7 @@ export default function ProductDetailsPageComponent({ addToCartReduxAction, redu
                 <AddedToCartMessageComponent showCartMessage={showCartMessage} setShowCartMessage={setShowCartMessage} />
                 <Row className="mt-5">
                     {loading ? (
-                        <h3 className="text-info"><Spinner as="span" variant="info" animation="border" size="md" role="status" aria-hidden="true" />{" "}Loading product details</h3>
+                        <h3 className="text-info me-1"><Spinner as="span" variant="info" animation="border" size="md" role="status" aria-hidden="true" />{' '}Loading product details</h3>
                     ) : error ? (
                         <h3>{error}</h3>
                     ) : (<>
@@ -112,12 +110,12 @@ export default function ProductDetailsPageComponent({ addToCartReduxAction, redu
                                     <ListGroup variant="flush">
                                         <ListGroup.Item><h3>{product.name}</h3></ListGroup.Item>
                                         <ListGroup.Item>
-                                            <span className="fw-bold text-danger me-1">{product.rating.toFixed(1)}</span>
-                                            <Rating readonly size={22} initialValue={product.rating.toFixed(1)} allowFraction className="mb-1" />
+                                            <span className="fw-bold text-danger me-1">{product.rating}</span>
+                                            <Rating readonly size={22} initialValue={product.rating} allowFraction className="mb-1" />
                                             <span className="text-secondary ms-1">({product.reviewsNumber})</span>
                                         </ListGroup.Item>
                                         <ListGroup.Item>
-                                            Price:{" "}<span className="fw-bold">${product.price}</span>
+                                            Price: <span className="fw-bold">${product.price}</span>
                                         </ListGroup.Item>
                                         <ListGroup.Item>
                                             {product.description}
@@ -127,21 +125,18 @@ export default function ProductDetailsPageComponent({ addToCartReduxAction, redu
                                 <Col md={4}>
                                     <ListGroup>
                                         <ListGroup.Item>
-                                            Status:
-                                            {product.count > 0 ? (<span
+                                            Status: {product.count > 0 ? (<span
                                                 style={{
                                                     color: '#39d615', fontWeight: 'bold'
-                                                }} className="ms-1">in stock</span>
+                                                }}>in stock</span>
                                             ) : (<span
                                                 style={{
-                                                    color: "red", fontWeight: 'bold'
+                                                    color: 'red', fontWeight: 'bold'
                                                 }}>out of stock</span>)}
                                         </ListGroup.Item>
-                                        {/* <ListGroup.Item>
-                                        Price:{" "}<span className="fw-bold">${product.price}</span>
-                                    </ListGroup.Item> */}
+
                                         <ListGroup.Item>
-                                            Quantity:{" "}
+                                            Quantity:{' '}
                                             <Form.Select size="lg" aria-label="Default select example" onChange={e => onChangeHandler(e)} value={quantity}>
                                                 {[...Array(product.count).keys()].map(x => (
                                                     <option key={x + 1} value={x + 1}>{x + 1}</option>

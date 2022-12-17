@@ -1,4 +1,5 @@
-import * as actionTypes from "../constants/chatConstants";
+// internal import
+import * as actionTypes from '../constants/chatConstants';
 
 const CHAT_INITIAL_STATE = {
     chatRooms: {},

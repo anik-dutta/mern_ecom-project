@@ -43,20 +43,13 @@ const registerUser = async (req, res, next) => {
             };
             res.cookie('access_token', generateAuthToken(userInfo), {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-                sameSite: "strict"
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict'
             })
                 .status(201)
                 .json({
                     success: 'User created successfully!',
-                    userCreated: userInfo,
-                    // userCreated: {
-                    //     _id: user.id,
-                    //     name: user.name,
-                    //     lastName: user.lastName,
-                    //     email: user.email,
-                    //     isAdmin: user.isAdmin
-                    // },
+                    userCreated: userInfo
                 });
         }
     } catch (error) {
@@ -75,8 +68,8 @@ const loginUser = async (req, res, next) => {
         if (user && matchPasswords(password, user.password)) {
             let cookieParams = {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-                sameSite: "strict"
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict'
             };
             if (doNotLogout) {
                 const nDaysInMS = 86400000 * 30;
@@ -110,7 +103,7 @@ const writeReview = async (req, res, next) => {
 
         const { comment, rating } = req.body;
         if (!(comment && rating)) {
-            return res.status(400).send("All inputs are required");
+            return res.status(400).send('All inputs are required');
         }
 
         let reviewId = ObjectId();
@@ -121,11 +114,11 @@ const writeReview = async (req, res, next) => {
                 _id: reviewId,
                 comment: comment,
                 rating: Number(rating),
-                user: { _id: req.user._id, name: req.user.name + " " + req.user.lastName },
+                user: { _id: req.user._id, name: req.user.name + ' ' + req.user.lastName },
             }
         ], { session: session });
 
-        const product = await Product.findById(req.params.productId).populate("reviews").session(session);
+        const product = await Product.findById(req.params.productId).populate('reviews').session(session);
 
         const alreadyReviewed = product.reviews.find((review) => review.user._id.toString() === req.user._id.toString());
 
@@ -144,7 +137,8 @@ const writeReview = async (req, res, next) => {
             product.rating = Number(rating);
         } else {
             product.reviewsNumber = product.reviews.length;
-            product.rating = reviewArray.map((item) => Number(item.rating)).reduce((sum, item) => sum + item, 0) / product.reviews.length;
+            let avgRating = reviewArray.map((item) => Number(item.rating)).reduce((sum, item) => sum + item, 0) / product.reviews.length;
+            product.rating = avgRating.toFixed(1);
         }
         await product.save();
 
@@ -159,23 +153,24 @@ const writeReview = async (req, res, next) => {
 // * (for user) middleware for put request
 const updateUserProfile = async (req, res, next) => {
     try {
+        const { name, lastName, phoneNumber, address, country, zipCode, city, state, password } = req.body;
         const user = await User.findById(req.user._id).orFail();
-        user.name = req.body.name || user.name;
-        user.lastName = req.body.lastName || user.lastName;
-        user.phoneNumber = req.body.phoneNumber;
-        user.address = req.body.address;
-        user.country = req.body.country;
-        user.zipCode = req.body.zipCode;
-        user.city = req.body.city;
-        user.state = req.body.state;
+        user.name = name || user.name;
+        user.lastName = lastName || user.lastName;
+        user.phoneNumber = phoneNumber;
+        user.address = address;
+        user.country = country;
+        user.zipCode = zipCode;
+        user.city = city;
+        user.state = state;
 
-        if (req.body.password !== user.password) {
-            user.password = hashPassword(req.body.password);
+        if (password !== user.password) {
+            user.password = hashPassword(password);
         }
         await user.save();
 
         res.json({
-            success: "User updated",
+            success: 'User updated',
             userUpdated: {
                 _id: user._id,
                 name: user.name,
@@ -211,12 +206,13 @@ const getUser = async (req, res, next) => {
 // * (for admin) middleware for put request
 const updateUser = async (req, res, next) => {
     try {
+        const { name, lastName, email, isAdmin } = req.body;
         const user = await User.findById(req.params.id).orFail();
 
-        user.name = req.body.name || user.name;
-        user.lastName = req.body.lastName || user.lastName;
-        user.email = req.body.email || user.email;
-        user.isAdmin = req.body.isAdmin;
+        user.name = name || user.name;
+        user.lastName = lastName || user.lastName;
+        user.email = email || user.email;
+        user.isAdmin = isAdmin;
 
         await user.save();
         res.send('User updated');
@@ -228,10 +224,6 @@ const updateUser = async (req, res, next) => {
 // * (for admin) middleware for delete request
 const deleteUser = async (req, res, next) => {
     try {
-        // const user = await User.findById(req.params.id).orFail();
-
-        // await user.deleteOne();
-
         await User.findByIdAndDelete(req.params.id).orFail();
         res.send('User deleted');
     } catch (error) {

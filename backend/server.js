@@ -36,13 +36,13 @@ function get_random(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-io.on("connection", (socket) => {
-    socket.on("admin connected with server", (adminName) => {
+io.on('connection', (socket) => {
+    socket.on('admin connected with server', (adminName) => {
         admins.push({ id: socket.id, admin: adminName });
     });
-    socket.on("client sends message", (msg) => {
+    socket.on('client sends message', (msg) => {
         if (admins.length === 0) {
-            socket.emit("no admin", "");
+            socket.emit('no admin', '');
         } else {
             let client = activeChats.find((client) => client.clientId === socket.id);
             let targetAdminId;
@@ -53,15 +53,15 @@ io.on("connection", (socket) => {
                 activeChats.push({ clientId: socket.id, adminId: admin.id });
                 targetAdminId = admin.id;
             }
-            socket.broadcast.to(targetAdminId).emit("server sends message from client to admin", {
+            socket.broadcast.to(targetAdminId).emit('server sends message from client to admin', {
                 user: socket.id,
                 message: msg,
             });
         }
     });
 
-    socket.on("admin sends message", ({ user, message }) => {
-        socket.broadcast.to(user).emit("server sends message from admin to client", message);
+    socket.on('admin sends message', ({ user, message }) => {
+        socket.broadcast.to(user).emit('server sends message from admin to client', message);
     });
 
     socket.on('admin closes chat', (socketId) => {
@@ -70,7 +70,7 @@ io.on("connection", (socket) => {
         c.disconnect();
     });
 
-    socket.on("disconnect", (reason) => {
+    socket.on('disconnect', (reason) => {
         // admin disconnected
         const removeIndex = admins.findIndex((item) => item.id === socket.id);
         if (removeIndex !== -1) {
@@ -83,7 +83,7 @@ io.on("connection", (socket) => {
         if (removeIndexClient !== -1) {
             activeChats.splice(removeIndexClient, 1);
         }
-        socket.broadcast.emit("disconnected", { reason: reason, socketId: socket.id });
+        socket.broadcast.emit('disconnected', { reason: reason, socketId: socket.id });
     });
 });
 

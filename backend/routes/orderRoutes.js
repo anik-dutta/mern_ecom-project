@@ -4,13 +4,13 @@ const express = require('express');
 const router = express.Router();
 
 // interal imports
-const { getUserOrders, getOrder, createOrder, updateOrderToPaid, updateOrderToDelivered, getAllOrders, getOrderForAnalysis } = require("../handlers/orderHandler");
+const { getUserOrders, getOrder, createOrder, updateOrderToPaid, updateOrderToDelivered, getAllOrders, getOrderForAnalysis } = require('../handlers/orderHandler');
 const { verifyLoggedIn, verifyAdmin } = require('../middlewares/verifyAuthToken');
 
 // * user routes
 router.use(verifyLoggedIn);
-router.get("/", getUserOrders);
-router.get("/user/:id", getOrder);
+router.get('/', getUserOrders);
+router.get('/user/:id', getOrder);
 router.post('/', createOrder);
 router.put('/paid/:id', updateOrderToPaid);
 

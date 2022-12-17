@@ -1,19 +1,21 @@
 // external imports
-import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
-import { Spinner } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { Row, Col, Container, ListGroup, Button } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 // internal imports
-import PaginationComponent from "../../components/PaginationComponent";
-import ProductForListComponent from "../../components/ProductForListComponent";
-import SortOptionsComponent from "../../components/filterQueryResultOptions/SortOptionsComponent";
-import PriceFilterComponent from "../../components/filterQueryResultOptions/PriceFilterComponent";
-import RatingFilterComponent from "../../components/filterQueryResultOptions/RatingFilterComponent";
-import CategoryFilterComponent from "../../components/filterQueryResultOptions/CategoryFilterComponent";
-import AttributesFilterComponent from "../../components/filterQueryResultOptions/AttributesFilterComponent";
+import PaginationComponent from '../../components/PaginationComponent';
+import ProductForListComponent from '../../components/ProductForListComponent';
+import SortOptionsComponent from '../../components/filterQueryResultOptions/SortOptionsComponent';
+import PriceFilterComponent from '../../components/filterQueryResultOptions/PriceFilterComponent';
+import RatingFilterComponent from '../../components/filterQueryResultOptions/RatingFilterComponent';
+import CategoryFilterComponent from '../../components/filterQueryResultOptions/CategoryFilterComponent';
+import AttributesFilterComponent from '../../components/filterQueryResultOptions/AttributesFilterComponent';
 
-export default function ProductListPageComponent({ getProducts, categories }) {
+export default function ProductListPageComponent(props) {
+    const { getProducts, categories } = props;
+
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -58,7 +60,7 @@ export default function ProductListPageComponent({ getProducts, categories }) {
             let count;
             Object.entries(categoriesFromFilter).forEach(([category, checked]) => {
                 if (checked) {
-                    let name = category.split("/")[0];
+                    let name = category.split('/')[0];
                     cat.push(name);
                     count = cat.filter((x) => x === name).length;
                     if (count === 1) {
@@ -113,7 +115,7 @@ export default function ProductListPageComponent({ getProducts, categories }) {
                                 <PriceFilterComponent price={price} setPrice={setPrice} />
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                <RatingFilterComponent ratingFromFilter={ratingFromFilter} setRatingFromFilter={setRatingFromFilter} />
+                                <RatingFilterComponent setRatingFromFilter={setRatingFromFilter} />
                             </ListGroup.Item>
                             {!location.pathname.match(/\/category/) && (
                                 <ListGroup.Item>
@@ -132,7 +134,7 @@ export default function ProductListPageComponent({ getProducts, categories }) {
                     </Col>
                     <Col md={9} className="mt-4">
                         {loading ? (
-                            <h3 className="text-info"><Spinner as="span" variant="info" animation="border" size="md" role="status" aria-hidden="true" />{" "}Loading products</h3>
+                            <h3 className="text-info"><Spinner as="span" variant="info" animation="border" size="md" role="status" aria-hidden="true" />{' '}Loading products</h3>
                         ) : error ? (
                             <h3>Error while loading products. Try again later.</h3>
                         ) : (

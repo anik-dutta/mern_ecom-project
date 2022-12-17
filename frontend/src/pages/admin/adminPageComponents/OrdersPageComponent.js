@@ -1,39 +1,31 @@
 // external imports
 import { Container, Row, Col, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 // internal imports 
 import AdminLinksComponent from '../../../components/adminComponents/AdminLinksComponent';
 import { logout } from '../../../redux/actions/userActions';
 import MetaComponent from '../../../components/MetaComponent';
 
-export default function OrdersPageComponent({ getOrders }) {
+export default function OrdersPageComponent(props) {
+    const { getOrders } = props
+    
     const [orders, setOrders] = useState([]);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         getOrders()
-            .then(result => setOrders(result))
+            .then(result => {
+                setOrders(result);
+            })
             .catch(err => {
-                // dispatch(logout());
-
                 if (err.message !== 'canceled') {
                     dispatch(logout());
                 }
-
-                // TODO: below was used in project. will fix it later. All pageComponents have the same issue
-                // console.log(
-                //     err.response.data.message ? err.response.data.message : err.response.data
-                // );
-
-                console.log(
-                    err.response && err.message ? err.response.data.message : err.message + ' ' + err.code
-                );
-            }
-            );
+            });
     }, [getOrders, dispatch]);
 
     return (
@@ -72,9 +64,7 @@ export default function OrdersPageComponent({ getOrders }) {
                                         <tr key={idx}>
                                             <td>{idx + 1}</td>
                                             <td>
-                                                {order.user !== null ? (
-                                                    <>{order.user.name}{' '}{order.user.lastName}</>
-                                                ) : null}
+                                                {order.user !== null && <>{order.user.name}{' '}{order.user.lastName}</>}
                                             </td>
                                             <td className="text-center">{order.createdAt.substring(0, 10)}</td>
                                             <td className="text-center">

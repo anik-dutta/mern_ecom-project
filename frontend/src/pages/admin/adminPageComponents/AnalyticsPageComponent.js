@@ -1,13 +1,15 @@
 // external imports
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 // internal imports
-import MetaComponent from "../../../components/MetaComponent";
+import MetaComponent from '../../../components/MetaComponent';
 import AdminLinksComponent from '../../../components/adminComponents/AdminLinksComponent';
 
-export default function AnalyticsPageComponent({ fetchOrdersForFirstDate, fetchOrdersForSecondDate, socketIOClient }) {
+export default function AnalyticsPageComponent(props) {
+    const { fetchOrdersForFirstDate, fetchOrdersForSecondDate, socketIOClient } = props;
+
     const [firstDateToCompare, setFirstDateToCompare] = useState(new Date().toISOString().substring(0, 10));
 
     let previousDay = new Date();
@@ -20,8 +22,7 @@ export default function AnalyticsPageComponent({ fetchOrdersForFirstDate, fetchO
     useEffect(() => {
         const socket = socketIOClient();
         socket.on('newOrder', (data) => console.log(data));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setDataForFirstSet, setDataForSecondSet, firstDateToCompare, secondDateToCompare]);
+    }, [setDataForFirstSet, setDataForSecondSet, firstDateToCompare, secondDateToCompare, socketIOClient]);
 
     useEffect(() => {
         const abctrl = new AbortController();
@@ -30,10 +31,10 @@ export default function AnalyticsPageComponent({ fetchOrdersForFirstDate, fetchO
                 let orderSum = 0;
                 const orders = data.map(order => {
                     orderSum += order.orderTotal.cartSubtotal;
-                    let time = new Date(order.createdAt).toLocaleString("en-US", {
-                        hour: "numeric",
+                    let time = new Date(order.createdAt).toLocaleString('en-US', {
+                        hour: 'numeric',
                         hour12: true,
-                        timeZone: "UTC",
+                        timeZone: 'UTC',
                     });
                     return { name: time, [firstDateToCompare]: orderSum };
                 });
@@ -48,10 +49,10 @@ export default function AnalyticsPageComponent({ fetchOrdersForFirstDate, fetchO
                 let orderSum = 0;
                 const orders = data.map(order => {
                     orderSum += order.orderTotal.cartSubtotal;
-                    let time = new Date(order.createdAt).toLocaleString("en-US", {
-                        hour: "numeric",
+                    let time = new Date(order.createdAt).toLocaleString('en-US', {
+                        hour: 'numeric',
                         hour12: true,
-                        timeZone: "UTC",
+                        timeZone: 'UTC',
                     });
                     return { name: time, [secondDateToCompare]: orderSum };
                 });
