@@ -10,8 +10,8 @@ import { logout } from '../../../redux/actions/userActions';
 import MetaComponent from '../../../components/MetaComponent';
 
 export default function OrdersPageComponent(props) {
-    const { getOrders } = props
-    
+    const { getOrders } = props;
+
     const [orders, setOrders] = useState([]);
 
     const dispatch = useDispatch();

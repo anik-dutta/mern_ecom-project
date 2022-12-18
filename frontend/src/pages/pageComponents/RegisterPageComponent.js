@@ -49,14 +49,14 @@ export default function RegisterPageComponent(props) {
     };
 
     const handleOnChange = () => {
-        console.log(password);
         const passwordField = document.querySelector('input[name=password]');
         const confirmPasswordField = document.querySelector('input[name=confirmPassword]');
-        setPassword(passwordField.value.replace(/\s/g, ''));
-        setConfirmPassword(confirmPasswordField.value.replace(/\s/g, ''));
+        let passwordWithoutSpaces = passwordField.value.replace(/\s/g, '');
+        setPassword(passwordWithoutSpaces);
+        let confirmPasswordWithoutSpaces = confirmPasswordField.value.replace(/\s/g, '');
+        setConfirmPassword();
 
-        if (password === confirmPassword) {
-
+        if (passwordWithoutSpaces === confirmPasswordWithoutSpaces) {
             setPasswordMatchState(true);
         } else {
             setPasswordMatchState(false);

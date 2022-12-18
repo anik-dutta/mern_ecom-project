@@ -62,8 +62,8 @@ export default function OrderDetailsPageComponent(props) {
                             <Col md={6}>
                                 <h5>Payment Method</h5>
                                 <Form.Select value={paymentMethod} disabled={true}>
-                                    <option value="pp">PayPal</option>
-                                    <option value="cod">Cash on Delivery (delivery may be delayed)</option>
+                                    <option value="PayPal">PayPal</option>
+                                    <option value="Cash on Delivery">Cash on Delivery (delivery may be delayed)</option>
                                 </Form.Select>
                             </Col>
                             <Row>

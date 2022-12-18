@@ -9,18 +9,12 @@ let filtersUrl = '';
 
 const proceedFilters = (filters) => {
     filtersUrl = '';
+
     Object.keys(filters).map((key, index) => {
         if (key === 'price') {
             filtersUrl = `&price=${filters[key]}`;
         } else if (key === 'rating') {
-            let rat = '';
-            Object.keys(filters[key]).map((key2, index2) => {
-                if (filters[key][key2]) {
-                    rat += `${key2},`;
-                }
-                return '';
-            });
-            filtersUrl += `&rating=${rat}`;
+            filtersUrl += `&rating=${filters[key]}`;
         } else if (key === 'category') {
             let cat = '';
             Object.keys(filters[key]).map((key3, index3) => {
@@ -51,6 +45,7 @@ const getProducts = async (categoryName = '', pageNumParam = null, searchQuery =
     const search = searchQuery ? `search/${searchQuery}/` : '';
     const category = categoryName ? `category/${categoryName}/` : '';
     const url = `/api/products/${category}${search}?pageNum=${pageNumParam}${filtersUrl}&sort=${sortOption}`;
+
     const { data } = await axios.get(url);
     return data;
 };

@@ -8,7 +8,7 @@ const Product = require('../models/ProductModel');
 // * (for user) middleware for get requests
 const getUserOrders = async (req, res, next) => {
     try {
-        const orders = await Order.find({ user: ObjectId(req.user._id) });
+        const orders = await Order.find({ user: ObjectId(req.user._id) }).sort({ createdAt: 'desc' });
         res.send(orders);
     } catch (error) {
         next(error);
@@ -74,7 +74,7 @@ const updateOrderToPaid = async (req, res, next) => {
 // * (for admin) middleware for get requests
 const getAllOrders = async (req, res, next) => {
     try {
-        const orders = await Order.find({}).populate('user', '-password -__v').sort({ paymentMethod: 'desc' });
+        const orders = await Order.find({}).populate('user', '-password -__v').sort({ createdAt: 'desc' });
         res.send(orders);
     } catch (error) {
         next(error);
@@ -102,8 +102,14 @@ const getOrderForAnalysis = async (req, res, next) => {
 const updateOrderToDelivered = async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id).orFail();
+
         order.isDelivered = true;
         order.deliveredAt = Date.now();
+
+        if (order.paymentMethod === 'Cash on Delivery' && order.isDelivered == true) {
+            order.isPaid = true;
+            order.paidAt = Date.now();
+        }
 
         const updatedOrder = await order.save();
         res.send(updatedOrder);

@@ -24,13 +24,14 @@ export default function UserProfilePageComponent(props) {
     }, [userInfo._id, fetchUser]);
 
     const handleOnChange = () => {
-        console.log(password);
         const passwordField = document.querySelector('input[name=password]');
         const confirmPasswordField = document.querySelector('input[name=confirmPassword]');
-        setPassword(passwordField.value.replace(/\s/g, ''));
-        setConfirmPassword(confirmPasswordField.value.replace(/\s/g, ''));
+        let passwordWithoutSpaces = passwordField.value.replace(/\s/g, '');
+        setPassword(passwordWithoutSpaces);
+        let confirmPasswordWithoutSpaces = confirmPasswordField.value.replace(/\s/g, '');
+        setConfirmPassword(confirmPasswordWithoutSpaces);
 
-        if (password === confirmPassword) {
+        if (passwordWithoutSpaces === confirmPasswordWithoutSpaces) {
             setPasswordMatchState(true);
         } else {
             setPasswordMatchState(false);
@@ -133,7 +134,7 @@ export default function UserProfilePageComponent(props) {
                                 <Form.Label>Confirm Password</Form.Label>
                                 <Form.Control type="password" placeholder="Re-enter the password" name="confirmPassword" minLength={8} maxLength={20} onChange={handleOnChange} isInvalid={!passwordMatchState} value={confirmPassword} />
                                 <Form.Control.Feedback type="invalid">
-                                    {!passwordMatchState === true ? <>Both passwords have to match</> : <>Enter the password again</>}
+                                    Both passwords should match
                                 </Form.Control.Feedback>
                             </Form.Group>
 

@@ -26,16 +26,16 @@ export default function ProductListPageComponent(props) {
     const [showResetFiltersButton, setShowResetFiltersButton] = useState(false);
     const [filters, setFilters] = useState();
     const [price, setPrice] = useState(500);
-    const [ratingFromFilter, setRatingFromFilter] = useState({});
+    const [ratingFromFilter, setRatingFromFilter] = useState([]);
     const [categoriesFromFilter, setCategoriesFromFilter] = useState({});
     const [sortOption, setSortOption] = useState('');
     const [paginationLinksNumber, setPaginationLinksNumber] = useState(null);
     const [pageNum, setPageNum] = useState(null);
 
-
     const { categoryName } = useParams() || '';
     const { pageNumParam } = useParams() || 1;
     const { searchQuery } = useParams() || '';
+
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -81,7 +81,6 @@ export default function ProductListPageComponent(props) {
                 setLoading(false);
             })
             .catch(err => {
-                console.log(err);
                 setError(true);
             });
     }, [getProducts, filters, sortOption, categoryName, pageNumParam, searchQuery]);
@@ -139,7 +138,7 @@ export default function ProductListPageComponent(props) {
                             <h3>Error while loading products. Try again later.</h3>
                         ) : (
                             products.map(product => {
-                                return <ProductForListComponent key={product._id} productId={product._id} images={product.images} name={product.name} description={product.description} price={product.price} rating={product.rating} reviewsNumber={product.reviewsNumber} />;
+                                return <ProductForListComponent key={product._id} productId={product._id} images={product.images} name={product.name} description={product.description} price={product.price} rating={product.rating} reviewsNumber={product.reviews.length} />;
                             })
                         )}
 

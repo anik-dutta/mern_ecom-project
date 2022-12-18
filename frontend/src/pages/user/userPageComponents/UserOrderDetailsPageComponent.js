@@ -46,9 +46,9 @@ export default function UserOrderDetailsPageComponent(props) {
                     setOrderButtonMessage('Your order is complete');
                     setButtonDisabled(true);
                 } else {
-                    if (result.paymentMethod === 'pp') {
+                    if (result.paymentMethod === 'PayPal') {
                         setOrderButtonMessage('Pay for your order');
-                    } else if (result.paymentMethod === 'cod') {
+                    } else if (result.paymentMethod === 'Cash on Delivery') {
                         setButtonDisabled(true);
                         setOrderButtonMessage('Wait for your order. You pay on delivery');
                     }
@@ -61,7 +61,7 @@ export default function UserOrderDetailsPageComponent(props) {
 
     const orderHandler = () => {
         setButtonDisabled(true);
-        if (paymentMethod === 'pp') {
+        if (paymentMethod === 'PayPal') {
             setOrderButtonMessage('To pay for the order, click one of the buttons below');
             if (!isPaid) {
                 loadPayPalScript(cartSubtotal, cartItems, id, updateStateAfterOrder);
@@ -95,8 +95,8 @@ export default function UserOrderDetailsPageComponent(props) {
                             <Col md={6}>
                                 <h5>Payment Method</h5>
                                 <Form.Select disabled={true} value={paymentMethod}>
-                                    <option value="pp">PayPal</option>
-                                    <option value="cod">Cash on Delivery (delivery may be delayed)</option>
+                                    <option value="PayPal">PayPal</option>
+                                    <option value="Cash on Delivery">Cash on Delivery (delivery may be delayed)</option>
                                 </Form.Select>
                             </Col>
                             <Row>
