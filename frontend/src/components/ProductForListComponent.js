@@ -17,11 +17,9 @@ export default function ProductForListComponent(props) {
                         <Card.Title>{name}</Card.Title>
                         <Card.Text>{description}</Card.Text>
                         <Card.Text>
-                            {rating && <>
-                                <span className="fw-bold text-danger me-1">{rating}</span>
-                                <Rating readonly size={22} initialValue={rating} allowFraction className="mb-1" />
-                                <span className="text-secondary ms-1">({reviewsNumber})</span>
-                            </>}
+                            <span className="fw-bold text-danger me-1">{rating}</span>
+                            <Rating readonly size={22} initialValue={rating} allowFraction className="mb-1" />
+                            <span className="text-secondary ms-1">({reviewsNumber})</span>
                         </Card.Text>
                         <Card.Text className="h5">
                             ${price}

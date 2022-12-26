@@ -110,11 +110,9 @@ export default function ProductDetailsPageComponent(props) {
                                     <ListGroup variant="flush">
                                         <ListGroup.Item><h3>{product.name}</h3></ListGroup.Item>
                                         <ListGroup.Item>
-                                            {product.rating && <>
-                                                <span className="fw-bold text-danger me-1">{product.rating}</span>
-                                                <Rating readonly size={22} initialValue={product.rating} allowFraction className="mb-1" />
-                                                <span className="text-secondary ms-1">({product.reviews.length})</span>
-                                            </>}
+                                            <span className="fw-bold text-danger me-1">{product.rating}</span>
+                                            <Rating readonly size={22} initialValue={product.rating} allowFraction className="mb-1" />
+                                            <span className="text-secondary ms-1">({product.reviewsNumber})</span>
                                         </ListGroup.Item>
                                         <ListGroup.Item>
                                             Price: <span className="fw-bold">${product.price}</span>
@@ -127,8 +125,14 @@ export default function ProductDetailsPageComponent(props) {
                                 <Col md={4}>
                                     <ListGroup>
                                         <ListGroup.Item>
-                                            Status: {product.count > 0 ? (<span style={{ color: '#39d615', fontWeight: 'bold' }}>in stock</span>
-                                            ) : (<span style={{ color: 'red', fontWeight: 'bold' }}>out of stock</span>)}
+                                            Status: {product.count > 0 ? (<span
+                                                style={{
+                                                    color: '#39d615', fontWeight: 'bold'
+                                                }}>in stock</span>
+                                            ) : (<span
+                                                style={{
+                                                    color: 'red', fontWeight: 'bold'
+                                                }}>out of stock</span>)}
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
@@ -147,10 +151,7 @@ export default function ProductDetailsPageComponent(props) {
                             </Row>
                             <Row>
                                 <Col className="mt-5">
-                                    {product.reviews.length !== 0 ?
-                                        <h5 className="text-success ms-3">Reviews</h5> :
-                                        <h6 className="ms-3">Be the first person to review {product.name}</h6>
-                                    }
+                                    <h5 className="text-success ms-3">Reviews</h5>
                                     <ListGroup variant="flush">
                                         {product.reviews &&
                                             product.reviews.map((review, idx) => (

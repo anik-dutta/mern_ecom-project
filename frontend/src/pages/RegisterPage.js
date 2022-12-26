@@ -10,6 +10,10 @@ const registerUserApiRequest = async (name, lastName, email, password) => {
     const { data } = await axios.post('/api/users/signup', { name, lastName, email, password });
 
     sessionStorage.setItem('userInfo', JSON.stringify(data.userCreated));
+
+    if (data.success === 'User created successfully!') {
+        window.location.href = '/user';
+    }
     return data;
 };
 

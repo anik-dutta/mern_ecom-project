@@ -12,7 +12,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 5,
-        // reviewsNumber: 5,
+        reviewsNumber: 5,
         reviews: [],
         attrs: [{ key: 'color', value: 'blue' }],
     },
@@ -29,7 +29,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 5,
-        // reviewsNumber: 5,
+        reviewsNumber: 5,
         reviews: [],
         attrs: [
             { key: 'color', value: 'black' },
@@ -49,7 +49,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 5,
-        // reviewsNumber: 5,
+        reviewsNumber: 5,
         reviews: [],
         attrs: [
             { key: 'color', value: 'black' },
@@ -69,7 +69,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 5,
-        // reviewsNumber: 5,
+        reviewsNumber: 5,
         reviews: [],
     },
     {
@@ -85,7 +85,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 5,
-        // reviewsNumber: 6,
+        reviewsNumber: 6,
         reviews: [],
     },
     {
@@ -101,7 +101,7 @@ const products = [
             { path: '/images/games-category.png' },
         ],
         rating: 4,
-        // reviewsNumber: 7,
+        reviewsNumber: 7,
         reviews: [],
     },
     {
@@ -117,7 +117,7 @@ const products = [
             { path: '/images/monitors-category.png' },
         ],
         rating: 4,
-        // reviewsNumber: 8,
+        reviewsNumber: 8,
         reviews: [],
     },
     {
@@ -133,7 +133,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 3,
-        // reviewsNumber: 9,
+        reviewsNumber: 9,
         reviews: [],
     },
     {
@@ -149,7 +149,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 5,
-        // reviewsNumber: 5,
+        reviewsNumber: 5,
         reviews: [],
     },
     {
@@ -165,7 +165,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 5,
-        // reviewsNumber: 6,
+        reviewsNumber: 6,
         reviews: [],
     },
     {
@@ -181,7 +181,7 @@ const products = [
             { path: '/images/games-category.png' },
         ],
         rating: 4,
-        // reviewsNumber: 7,
+        reviewsNumber: 7,
         reviews: [],
     },
     {
@@ -197,7 +197,7 @@ const products = [
             { path: '/images/monitors-category.png' },
         ],
         rating: 4,
-        // reviewsNumber: 8,
+        reviewsNumber: 8,
         reviews: [],
     },
     {
@@ -213,7 +213,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 3,
-        // reviewsNumber: 9,
+        reviewsNumber: 9,
         reviews: [],
     },
     {
@@ -229,7 +229,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 5,
-        // reviewsNumber: 5,
+        reviewsNumber: 5,
         reviews: [],
     },
     {
@@ -245,7 +245,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 5,
-        // reviewsNumber: 6,
+        reviewsNumber: 6,
         reviews: [],
     },
     {
@@ -261,7 +261,7 @@ const products = [
             { path: '/images/games-category.png' },
         ],
         rating: 4,
-        // reviewsNumber: 7,
+        reviewsNumber: 7,
         reviews: [],
     },
     {
@@ -277,7 +277,7 @@ const products = [
             { path: '/images/monitors-category.png' },
         ],
         rating: 4,
-        // reviewsNumber: 8,
+        reviewsNumber: 8,
         reviews: [],
     },
     {
@@ -293,7 +293,7 @@ const products = [
             { path: '/images/tablets-category.png' },
         ],
         rating: 3,
-        // reviewsNumber: 9,
+        reviewsNumber: 9,
         reviews: [],
     },
 ];

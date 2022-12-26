@@ -188,7 +188,7 @@ export default function CreateProductPageComponent(props) {
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicNewCategory">
                                 <Form.Label>
-                                    Or, <strong>create a new category (e.g. Computers/Laptops/Books)</strong>
+                                    Or create a new category (e.g. Computers/Laptops/Books){' '}
                                 </Form.Label>
                                 <Form.Control onKeyUp={newCategoryHandler} name="newCategory" type="text" />
                             </Form.Group>

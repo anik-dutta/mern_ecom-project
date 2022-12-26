@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 // internal imports
 const Product = require('../models/ProductModel');
-const recordsPerPage = require('../config/pagination');
+const { recordsPerPage } = require('../config/pagination');
 const imageValidate = require('../utils/imageValidate');
 
 // * (for user) middleware for get requests
@@ -31,13 +31,11 @@ const getProducts = async (req, res, next) => {
             hasQueryCondition = true;
             priceQueryCondition = { price: { $lte: Number(req.query.price) } };
         }
-
         let ratingQueryCondition = {};
         if (req.query.rating) {
             hasQueryCondition = true;
-            ratingQueryCondition = { rating: { $gte: Number(req.query.rating) } };
+            ratingQueryCondition = { rating: { $in: req.query.rating.split(',') } };
         }
-
         let categoryQueryCondition = {};
         const categoryName = req.params.categoryName || '';
         if (categoryName) {

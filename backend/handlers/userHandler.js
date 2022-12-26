@@ -133,15 +133,13 @@ const writeReview = async (req, res, next) => {
         product.reviews.push(reviewId);
 
         if (product.reviews.length === 1) {
-            // product.reviewsNumber = 1;
+            product.reviewsNumber = 1;
             product.rating = Number(rating);
         } else {
-            // product.reviewsNumber = product.reviews.length;
-
+            product.reviewsNumber = product.reviews.length;
             let avgRating = reviewArray.map((item) => Number(item.rating)).reduce((sum, item) => sum + item, 0) / product.reviews.length;
             product.rating = avgRating.toFixed(1);
         }
-
         await product.save();
 
         await session.commitTransaction();
