@@ -1,81 +1,75 @@
 const categories = [
     {
-        name: "Computers",
+        name: 'Computers',
         description:
-            "Computers - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/tablets-category.png",
+            'Computers - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/tablets-category.png',
         attrs: [
-            { key: "RAM", value: ["1 TB", "2 TB", "4 TB"] },
-            { key: "Color", value: ["Blue", "Red", "Green", "Black"] },
+            { key: 'RAM', value: ['1 TB', '2 TB', '4 TB'] },
+            { key: 'Color', value: ['Blue', 'Red', 'Green', 'Black'] }
         ],
     },
     {
-        name: "Computers/Laptops",
+        name: 'Computers/Laptops',
         description:
-            "Computers/Laptops - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/tablets-category.png",
+            'Computers/Laptops - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/tablets-category.png',
     },
     {
-        name: "Computers/Laptops/Lenovo",
+        name: 'Computers/Laptops/Lenovo',
         description:
-            "Computers/Laptops/Lenovo - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/tablets-category.png",
+            'Computers/Laptops/Lenovo - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/tablets-category.png',
     },
     {
-        name: "Computers/Laptops/Dell",
+        name: 'Computers/Laptops/Dell',
         description:
-            "Computers/Laptops/Dell - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/tablets-category.png",
+            'Computers/Laptops/Dell - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/tablets-category.png',
     },
     {
-        name: "Tablets",
+        name: 'Tablets',
         description:
-            "Tablets - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/tablets-category.png",
+            'Tablets - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/tablets-category.png',
     },
     {
-        name: "Monitors",
+        name: 'Monitors',
         description:
-            "Monitors - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/monitors-category.png",
+            'Monitors - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/monitors-category.png',
     },
     {
-        name: "Games",
+        name: 'Games',
         description:
-            "Games - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/games-category.png",
+            'Games - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/games-category.png',
     },
     {
-        name: "Printers",
+        name: 'Printers',
         description:
-            "Printers - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/tablets-category.png",
+            'Printers - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/tablets-category.png',
     },
     {
-        name: "Software",
+        name: 'Software',
         description:
-            "Software - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/monitors-category.png",
+            'Software - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/monitors-category.png',
     },
     {
-        name: "Cameras",
+        name: 'Cameras',
         description:
-            "Cameras - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/games-category.png",
+            'Cameras - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/games-category.png',
     },
     {
-        name: "Books",
+        name: 'Books',
         description:
-            "Books - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/tablets-category.png",
-        attrs: [{ key: "Genre", value: ["Romanctic", "Comedy", "Thriller"] }],
-    },
-    {
-        name: "Videos",
-        description:
-            "Videos - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.",
-        image: "/images/monitors-category.png",
-    },
+            'Books - Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, magnam qui. Accusamus similique placeat at nisi autem eaque molestiae velit.',
+        image: '/images/tablets-category.png',
+        attrs: [{ key: 'Genre', value: ['Romantic', 'Comedy', 'Thriller', 'Fiction'] }],
+    }
 ];
 
 module.exports = categories;

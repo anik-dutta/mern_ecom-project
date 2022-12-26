@@ -2,9 +2,10 @@
 import { Alert, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-// import { Link } from 'react-router-dom';
 
-export default function AddedToCartMessageComponent({ showCartMessage, setShowCartMessage }) {
+export default function AddedToCartMessageComponent(props) {
+    const { showCartMessage, setShowCartMessage } = props;
+
     const navigate = useNavigate();
 
     const goBack = () => {

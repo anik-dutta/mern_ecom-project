@@ -7,6 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // internal imports
 import './index.css';
+import './chats.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';

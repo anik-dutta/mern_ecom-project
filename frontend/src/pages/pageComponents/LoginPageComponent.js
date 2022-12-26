@@ -1,16 +1,20 @@
 // external imports
-import { Container, Row, Col, Form, Button, Spinner, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Container, Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 // internal import
-import MetaComponent from "../../components/MetaComponent";
+import MetaComponent from '../../components/MetaComponent';
 
-export default function LoginPageComponent({ loginUserApiRequest, reduxDispatch, setReduxUserState }) {
+export default function LoginPageComponent(props) {
+    const { loginUserApiRequest, reduxDispatch, setReduxUserState } = props;
+
     const [validated, setValidated] = useState(false);
     const [loginUserResponseSate, setLoginUserResponseSate] = useState({
         success: '', error: '', loading: false
     });
+
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -31,15 +35,9 @@ export default function LoginPageComponent({ loginUserApiRequest, reduxDispatch,
                     }
 
                     if (result.success === 'User logged in' && !result.userLoggedIn.isAdmin) {
-                        // navigate('/user', { replace: true });
-
-                        // window.location.href = '/user';
-                        window.location.assign('/user');
+                        navigate('/', { replace: true });
                     } else {
-                        // navigate('/admin/orders', { replace: true });
-
-                        // window.location.href = '/admin/orders';
-                        window.location.assign('/admin/orders');
+                        navigate('/admin/orders', { replace: true });
                     }
                 })
                 .catch(err => {
@@ -70,12 +68,12 @@ export default function LoginPageComponent({ loginUserApiRequest, reduxDispatch,
                             </Form.Group>
                             <Row className="pb-2">
                                 <Col>
-                                    Don't have an account? <Link to="/signup" style={{ textDecoration: "none", fontWeight: "bold" }}>{" "}Create Account</Link>
+                                    Don't have an account? <Link to="/signup" style={{ textDecoration: 'none', fontWeight: 'bold' }}> Create Account</Link>
                                 </Col>
                             </Row>
                             <Button type="submit" className="mt-2">
                                 {loginUserResponseSate && loginUserResponseSate.loading === true ? (<>
-                                    <Spinner as="span" variant="info" animation="border" size="sm" role="status" aria-hidden="true" />{" "}
+                                    <Spinner as="span" variant="info" animation="border" size="sm" role="status" aria-hidden="true" />{' '}
                                 </>) : ''}Log In
                             </Button>
                             <Alert variant="danger" className="mt-2" show={loginUserResponseSate && loginUserResponseSate.error === 'Wrong credentials!'}>

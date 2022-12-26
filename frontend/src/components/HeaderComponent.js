@@ -4,12 +4,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import socketIOClient from "socket.io-client";
+import socketIOClient from 'socket.io-client';
 
 // internal imports
 import { logout } from '../redux/actions/userActions';
 import { getCategories } from '../redux/actions/categoryActions';
-import { setChatRooms, setSocket, setMessageReceived, removeChatRoom } from "../redux/actions/chatActions";
+import { setChatRooms, setSocket, setMessageReceived, removeChatRoom } from '../redux/actions/chatActions';
 
 export default function HeaderComponent() {
     const dispatch = useDispatch();
@@ -19,8 +19,8 @@ export default function HeaderComponent() {
     const { categories } = useSelector((state) => state.getCategories);
     const { messageReceived } = useSelector((state) => state.adminChat);
 
-    const [searchCategoryToggle, setSearchCategoryToggle] = useState("All");
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchCategoryToggle, setSearchCategoryToggle] = useState('All');
+    const [searchQuery, setSearchQuery] = useState('');
 
     const navigate = useNavigate();
 
@@ -30,10 +30,10 @@ export default function HeaderComponent() {
 
     useEffect(() => {
         if (userInfo.isAdmin) {
-            let audio = new Audio("/audio/chat-msg.mp3");
+            let audio = new Audio('/audio/chat-msg.mp3');
             const socket = socketIOClient();
-            socket.emit("admin connected with server", "Admin" + Math.floor(Math.random() * 1000000000000));
-            socket.on("server sends message from client to admin", ({ user, message }) => {
+            socket.emit('admin connected with server', 'Admin' + Math.floor(Math.random() * 1000000000000));
+            socket.on('server sends message from client to admin', ({ user, message }) => {
                 dispatch(setSocket(socket));
                 dispatch(setChatRooms(user, message));
                 dispatch(setMessageReceived(true));
@@ -51,15 +51,15 @@ export default function HeaderComponent() {
         if (e.keyCode && e.keyCode !== 13) return;
         e.preventDefault();
         if (searchQuery.trim()) {
-            if (searchCategoryToggle === "All") {
+            if (searchCategoryToggle === 'All') {
                 navigate(`/product-list/search/${searchQuery}`);
             } else {
-                navigate(`/product-list/category/${searchCategoryToggle.replace(/\//g, ",")}/search/${searchQuery}`);
+                navigate(`/product-list/category/${searchCategoryToggle.replace(/\//g, ',')}/search/${searchQuery}`);
             }
-        } else if (searchCategoryToggle !== "All") {
-            navigate(`/product-list/category/${searchCategoryToggle.replace(/\//g, ",")}`);
+        } else if (searchCategoryToggle !== 'All') {
+            navigate(`/product-list/category/${searchCategoryToggle.replace(/\//g, ',')}`);
         } else {
-            navigate("/product-list");
+            navigate('/product-list');
         }
     };
 

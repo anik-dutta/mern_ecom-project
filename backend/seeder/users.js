@@ -1,5 +1,5 @@
-const bcrypt = require("bcryptjs");
-const ObjectId = require("mongodb").ObjectId;
+const bcrypt = require('bcryptjs');
+const ObjectId = require('mongodb').ObjectId;
 
 const users = [
     {

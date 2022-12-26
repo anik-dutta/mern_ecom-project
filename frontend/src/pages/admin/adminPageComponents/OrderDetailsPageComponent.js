@@ -1,15 +1,16 @@
 // external imports
-import { Container, Row, Col, Form, Alert, ListGroup, Button } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Container, Row, Col, Form, Alert, ListGroup, Button } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 // internal imports
-import CardItemComponent from "../../../components/CardItemComponent";
+import CardItemComponent from '../../../components/CardItemComponent';
 import { logout } from '../../../redux/actions/userActions';
-import MetaComponent from "../../../components/MetaComponent";
+import MetaComponent from '../../../components/MetaComponent';
 
-export default function OrderDetailsPageComponent({ getOrder, markAsDelivered }) {
+export default function OrderDetailsPageComponent(props) {
+    const { getOrder, markAsDelivered } = props;
     const { id } = useParams();
 
     const [userInfo, setUserInfo] = useState({});
@@ -37,20 +38,9 @@ export default function OrderDetailsPageComponent({ getOrder, markAsDelivered })
                 setCartItems(order.cartItems);
             })
             .catch(err => {
-                // dispatch(logout());
-
                 if (err.message !== 'canceled') {
                     dispatch(logout());
                 }
-
-                // TODO: below was used in project. will fix it later. All pageComponents have the same issue
-                // console.log(
-                //     err.response.data.message ? err.response.data.message : err.response.data
-                // );
-
-                // console.log(
-                //     err.response && err.message ? err.response.data.message : err.message + ' ' + err.code
-                // );
             }
             );
     }, [isDelivered, id, getOrder, dispatch]);
@@ -65,26 +55,25 @@ export default function OrderDetailsPageComponent({ getOrder, markAsDelivered })
                         <Row>
                             <Col md={6}>
                                 <h5>Shipping</h5>
-                                <strong>Name: </strong>{userInfo.name}{" "}{userInfo.lastName}<br />
-                                <strong>Address: </strong> {userInfo.address}{" "}{userInfo.city}{" "}{userInfo.state}{" "}{userInfo.zipCode}{" "}{userInfo.country}<br />
+                                <strong>Name: </strong>{userInfo.name}{' '}{userInfo.lastName}<br />
+                                <strong>Address: </strong> {userInfo.address}{' '}{userInfo.city}{' '}{userInfo.state}{' '}{userInfo.zipCode}{' '}{userInfo.country}<br />
                                 <strong>Phone: </strong>{userInfo.phone}<br />
                             </Col>
                             <Col md={6}>
                                 <h5>Payment Method</h5>
                                 <Form.Select value={paymentMethod} disabled={true}>
-                                    <option value="pp">PayPal</option>
-                                    <option value="visa">Visa</option>
-                                    <option value="cod">Cash on Delivery (delivery may be delayed)</option>
+                                    <option value="PayPal">PayPal</option>
+                                    <option value="Cash on Delivery">Cash on Delivery (delivery may be delayed)</option>
                                 </Form.Select>
                             </Col>
                             <Row>
                                 <Col>
-                                    <Alert className="mt-3" variant={isDelivered ? "success" : "danger"}>
+                                    <Alert className="mt-3" variant={isDelivered ? 'success' : 'danger'}>
                                         {isDelivered ? <>Delivered on {isDelivered}</> : <>Not delivered yet</>}
                                     </Alert>
                                 </Col>
                                 <Col className="ms-4 pe-0">
-                                    <Alert className="mt-3" variant={isPaid ? "success" : "danger"}>
+                                    <Alert className="mt-3" variant={isPaid ? 'success' : 'danger'}>
                                         {isPaid ? <>Paid on {isPaid}</> : <>Not paid yet</>}
                                     </Alert>
                                 </Col>
@@ -117,23 +106,15 @@ export default function OrderDetailsPageComponent({ getOrder, markAsDelivered })
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <div className="d-grid gap-2">
-                                    <Button type="button" variant={isDelivered ? "success" : "warning"} disabled={buttonDisabled} onClick={() => markAsDelivered(id)
+                                    <Button type="button" variant={isDelivered ? 'success' : 'warning'} disabled={buttonDisabled} onClick={() => markAsDelivered(id)
                                         .then(res => {
                                             if (res) {
                                                 setIsDelivered(true);
                                             }
                                         })
                                         .catch(err => {
-                                            // TODO: below was used in project. will fix it later. All pageComponents have the same issue
-                                            // console.log(
-                                            //     err.response.data.message ? err.response.data.message : err.response.data
-                                            // );
-
-                                            console.log(
-                                                err.response && err.message ? err.response.data.message : err.message + ' ' + err.code
-                                            );
-                                        }
-                                        )
+                                            console.log(err.response.data.message ? err.response.data.message : err.response.data);
+                                        })
                                     }>
                                         {orderButtonMessage}
                                     </Button>

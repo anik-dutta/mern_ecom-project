@@ -1,10 +1,10 @@
 // external imports
-import { Nav, Navbar } from "react-bootstrap";
+import { Nav, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 
 // internal imports
-import { logout } from "../../redux/actions/userActions";
+import { logout } from '../../redux/actions/userActions';
 
 export default function AdminLinksComponent() {
     const dispatch = useDispatch();

@@ -1,22 +1,25 @@
 // external imports
-import { Rating } from "react-simple-star-rating";
-import { Form } from "react-bootstrap";
-import { Fragment } from "react";
+import { Rating } from 'react-simple-star-rating';
+import { Form } from 'react-bootstrap';
 
-export default function RatingFilterComponent({ ratingFromFilter, setRatingFromFilter }) {
+export default function RatingFilterComponent(props) {
+    const { setRatingFromFilter } = props;
+
     return (
         <>
             <span className="fw-bold">Rating</span>
-            {Array.from({ length: 5 }).map((_, idx) => (
-                <Fragment key={idx}>
-                    <Form.Check type="checkbox" id={`check-api-${idx}`} >
-                        <Form.Check.Input type="checkbox" isValid className="mt-2" onChange={e => setRatingFromFilter(items => { return { ...items, [5 - idx]: e.target.checked }; })} />
-                        <Form.Check.Label style={{ cursor: "pointer" }}>
-                            <Rating readonly size={20} initialValue={5 - idx} />
-                        </Form.Check.Label>
-                    </Form.Check>
-                </Fragment>
-            ))}
+            <Form>
+                <div className="mt-2" style={{ cursor: 'pointer' }}>
+                    {Array.from({ length: 5 }).map((_, idx) => (
+                        idx !== 0 && (
+                            <Form.Check
+                                key={idx} type='radio' name="rating" className="m-0"
+                                label={<p className="fw-bold text-success"><Rating className="mb-2 mt-0 p-0" readonly size={20} allowFraction initialValue={5 - idx * 0.5} />{' '}{(5 - idx * 0.5).toFixed(1)} & up</p>}
+                                onChange={e => setRatingFromFilter(items => { return [5 - idx * 0.5]; })}
+                            />
+                        )))}
+                </div>
+            </Form>
         </>
     );
-};
+}

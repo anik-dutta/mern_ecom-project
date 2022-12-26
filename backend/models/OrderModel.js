@@ -1,8 +1,8 @@
 // external import
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 // internal import
-const User = require("./UserModel");
+const User = require('./UserModel');
 
 // creating schema
 const orderSchema = mongoose.Schema({
@@ -22,7 +22,7 @@ const orderSchema = mongoose.Schema({
     ],
     paymentMethod: {
         type: String,
-        required: true,
+        required: true
     },
     transactionResult: {
         status: { type: String },
@@ -38,12 +38,12 @@ const orderSchema = mongoose.Schema({
 });
 
 // creating model
-const Order = mongoose.model("Order", orderSchema);
+const Order = mongoose.model('Order', orderSchema);
 
 // get the real time orders data by socket.io
-Order.watch().on("change", (data) => {
-    if (data.operationType === "insert") {
-        io.emit("newOrder", data.fullDocument);
+Order.watch().on('change', (data) => {
+    if (data.operationType === 'insert') {
+        io.emit('newOrder', data.fullDocument);
     }
 });
 

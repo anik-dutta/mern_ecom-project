@@ -1,10 +1,10 @@
 // external imports
-import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 // internal imports
-import UserCartDetailsPageComponent from "./userPageComponents/UserCartDetailsPageComponent";
-import { addToCart, removeFromCart } from "../../redux/actions/cartActions";
+import UserCartDetailsPageComponent from './userPageComponents/UserCartDetailsPageComponent';
+import { addToCart, removeFromCart } from '../../redux/actions/cartActions';
 
 const getUser = async (userId) => {
     const { data } = await axios.get(`/api/users/profile/${userId}`);

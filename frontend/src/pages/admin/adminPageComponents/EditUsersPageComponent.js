@@ -1,14 +1,16 @@
 // external imports
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Row, Col, Container, Form, Button, Alert } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Row, Col, Container, Form, Button, Alert } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-export default function EditUsersPageComponent({ fetchUser, updateUserApiRequest }) {
+export default function EditUsersPageComponent(props) {
+    const { fetchUser, updateUserApiRequest } = props;
+
     const [validated, setValidated] = useState(false);
     const [user, setUser] = useState([]);
     const [isAdminState, setIsAdminState] = useState(false);
-    const [updateUserResponseState, setUpdateUserResponseState] = useState({ message: "", error: "" });
+    const [updateUserResponseState, setUpdateUserResponseState] = useState({ message: '', error: '' });
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -75,9 +77,7 @@ export default function EditUsersPageComponent({ fetchUser, updateUserApiRequest
                             />
                         </Form.Group>
                         <Button className="btn-sm mt-2" type="submit" >Update</Button>
-                        {updateUserResponseState.error && (
-                            <Alert variant="danger">{updateUserResponseState.error}</Alert>
-                        )}
+                        {updateUserResponseState.error && <Alert variant="danger">{updateUserResponseState.error}</Alert>}
                     </Form>
                 </Col>
                 <Col></Col>

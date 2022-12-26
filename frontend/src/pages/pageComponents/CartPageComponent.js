@@ -6,13 +6,15 @@ import { LinkContainer } from 'react-router-bootstrap';
 import CardItemComponent from '../../components/CardItemComponent';
 import MetaComponent from '../../components/MetaComponent';
 
-export default function CartPageComponent({ addToCart, removeFromCart, cartItems, cartSubtotal, reduxDispatch, itemsCount }) {
+export default function CartPageComponent(props) {
+    const { addToCart, removeFromCart, cartItems, cartSubtotal, reduxDispatch, itemsCount } = props;
+
     const changeCount = (productID, quantity) => {
         reduxDispatch(addToCart(productID, quantity));
     };
 
     const removeFromCartHandler = (productID, quantity, price) => {
-        if (window.confirm('Removing the product from your cart. Press "Ok" to confirm.')) {
+        if (window.confirm('Removing the product from your cart. Press \'Ok\' to confirm.')) {
             reduxDispatch(removeFromCart(productID, quantity, price));
         }
     };
@@ -38,7 +40,7 @@ export default function CartPageComponent({ addToCart, removeFromCart, cartItems
                     <Col md={3}>
                         <ListGroup>
                             <ListGroup.Item>
-                                <h5>Subtotal ({cartItems.length === 1 || cartItems.length === 0 ? <>{cartItems.length}{" "}Product</> : <>{cartItems.length}{" "}Products</>})</h5>
+                                <h5>Subtotal ({cartItems.length === 1 || cartItems.length === 0 ? <>{cartItems.length}{' '}Product</> : <>{cartItems.length}{' '}Products</>})</h5>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 Net Quantity:<span className="fw-bold ms-1">{itemsCount}</span>

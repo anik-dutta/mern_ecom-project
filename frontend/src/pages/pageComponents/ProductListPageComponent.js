@@ -1,19 +1,21 @@
 // external imports
-import { Row, Col, Container, ListGroup, Button } from "react-bootstrap";
-import { Spinner } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { Row, Col, Container, ListGroup, Button } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 // internal imports
-import PaginationComponent from "../../components/PaginationComponent";
-import ProductForListComponent from "../../components/ProductForListComponent";
-import SortOptionsComponent from "../../components/filterQueryResultOptions/SortOptionsComponent";
-import PriceFilterComponent from "../../components/filterQueryResultOptions/PriceFilterComponent";
-import RatingFilterComponent from "../../components/filterQueryResultOptions/RatingFilterComponent";
-import CategoryFilterComponent from "../../components/filterQueryResultOptions/CategoryFilterComponent";
-import AttributesFilterComponent from "../../components/filterQueryResultOptions/AttributesFilterComponent";
+import PaginationComponent from '../../components/PaginationComponent';
+import ProductForListComponent from '../../components/ProductForListComponent';
+import SortOptionsComponent from '../../components/filterQueryResultOptions/SortOptionsComponent';
+import PriceFilterComponent from '../../components/filterQueryResultOptions/PriceFilterComponent';
+import RatingFilterComponent from '../../components/filterQueryResultOptions/RatingFilterComponent';
+import CategoryFilterComponent from '../../components/filterQueryResultOptions/CategoryFilterComponent';
+import AttributesFilterComponent from '../../components/filterQueryResultOptions/AttributesFilterComponent';
 
-export default function ProductListPageComponent({ getProducts, categories }) {
+export default function ProductListPageComponent(props) {
+    const { getProducts, categories } = props;
+
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -24,16 +26,16 @@ export default function ProductListPageComponent({ getProducts, categories }) {
     const [showResetFiltersButton, setShowResetFiltersButton] = useState(false);
     const [filters, setFilters] = useState();
     const [price, setPrice] = useState(500);
-    const [ratingFromFilter, setRatingFromFilter] = useState({});
+    const [ratingFromFilter, setRatingFromFilter] = useState([]);
     const [categoriesFromFilter, setCategoriesFromFilter] = useState({});
     const [sortOption, setSortOption] = useState('');
     const [paginationLinksNumber, setPaginationLinksNumber] = useState(null);
     const [pageNum, setPageNum] = useState(null);
 
-
     const { categoryName } = useParams() || '';
     const { pageNumParam } = useParams() || 1;
     const { searchQuery } = useParams() || '';
+
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -58,7 +60,7 @@ export default function ProductListPageComponent({ getProducts, categories }) {
             let count;
             Object.entries(categoriesFromFilter).forEach(([category, checked]) => {
                 if (checked) {
-                    let name = category.split("/")[0];
+                    let name = category.split('/')[0];
                     cat.push(name);
                     count = cat.filter((x) => x === name).length;
                     if (count === 1) {
@@ -79,7 +81,6 @@ export default function ProductListPageComponent({ getProducts, categories }) {
                 setLoading(false);
             })
             .catch(err => {
-                console.log(err);
                 setError(true);
             });
     }, [getProducts, filters, sortOption, categoryName, pageNumParam, searchQuery]);
@@ -113,7 +114,7 @@ export default function ProductListPageComponent({ getProducts, categories }) {
                                 <PriceFilterComponent price={price} setPrice={setPrice} />
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                <RatingFilterComponent ratingFromFilter={ratingFromFilter} setRatingFromFilter={setRatingFromFilter} />
+                                <RatingFilterComponent setRatingFromFilter={setRatingFromFilter} />
                             </ListGroup.Item>
                             {!location.pathname.match(/\/category/) && (
                                 <ListGroup.Item>
@@ -132,12 +133,12 @@ export default function ProductListPageComponent({ getProducts, categories }) {
                     </Col>
                     <Col md={9} className="mt-4">
                         {loading ? (
-                            <h3 className="text-info"><Spinner as="span" variant="info" animation="border" size="md" role="status" aria-hidden="true" />{" "}Loading products</h3>
+                            <h3 className="text-info"><Spinner as="span" variant="info" animation="border" size="md" role="status" aria-hidden="true" />{' '}Loading products</h3>
                         ) : error ? (
                             <h3>Error while loading products. Try again later.</h3>
                         ) : (
                             products.map(product => {
-                                return <ProductForListComponent key={product._id} productId={product._id} images={product.images} name={product.name} description={product.description} price={product.price} rating={product.rating} reviewsNumber={product.reviewsNumber} />;
+                                return <ProductForListComponent key={product._id} productId={product._id} images={product.images} name={product.name} description={product.description} price={product.price} rating={product.rating} reviewsNumber={product.reviews.length} />;
                             })
                         )}
 

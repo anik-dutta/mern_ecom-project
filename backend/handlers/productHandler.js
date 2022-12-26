@@ -16,9 +16,9 @@ const getProducts = async (req, res, next) => {
 
         // * sort by name, price etc.
         let sort = {};
-        const sortOption = req.query.sort || "";
+        const sortOption = req.query.sort || '';
         if (sortOption) {
-            let sortOpt = sortOption.split("_");
+            let sortOpt = sortOption.split('_');
             sort = { [sortOpt[0]]: Number(sortOpt[1]) };
         }
 
@@ -31,24 +31,26 @@ const getProducts = async (req, res, next) => {
             hasQueryCondition = true;
             priceQueryCondition = { price: { $lte: Number(req.query.price) } };
         }
+
         let ratingQueryCondition = {};
         if (req.query.rating) {
             hasQueryCondition = true;
-            ratingQueryCondition = { rating: { $in: req.query.rating.split(",") } };
+            ratingQueryCondition = { rating: { $gte: Number(req.query.rating) } };
         }
+
         let categoryQueryCondition = {};
-        const categoryName = req.params.categoryName || "";
+        const categoryName = req.params.categoryName || '';
         if (categoryName) {
             hasQueryCondition = true;
-            let a = categoryName.replace(/,/g, "/");
-            var regEx = new RegExp("^" + a);
+            let a = categoryName.replace(/,/g, '/');
+            var regEx = new RegExp('^' + a);
             categoryQueryCondition = { category: regEx };
         }
         if (req.query.category) {
             hasQueryCondition = true;
-            let a = req.query.category.split(",").map((item) => {
+            let a = req.query.category.split(',').map((item) => {
                 if (item) {
-                    return new RegExp("^" + item);
+                    return new RegExp('^' + item);
                 }
             });
             categoryQueryCondition = {
@@ -57,24 +59,23 @@ const getProducts = async (req, res, next) => {
         }
         let attrsQueryCondition = [];
         if (req.query.attrs) {
-            // attrs=RAM-1TB-2TB-4TB,color-blue-red
-            // [ 'RAM-1TB-4TB', 'color-blue', '' ]
-            attrsQueryCondition = req.query.attrs.split(",").reduce((acc, item) => {
+            attrsQueryCondition = req.query.attrs.split(',').reduce((acc, item) => {
                 if (item) {
-                    let a = item.split("-");
+                    let a = item.split('-');
                     let values = [...a];
-                    values.shift(); // removes first item
+                    // remove first item
+                    values.shift();
                     let a1 = {
                         attrs: { $elemMatch: { key: a[0], value: { $in: values } } },
                     };
                     acc.push(a1);
-                    // console.dir(acc, { depth: null })
+
                     return acc;
                 } else {
                     return acc;
                 }
             }, []);
-            //   console.dir(attrsQueryCondition, { depth: null });
+
             hasQueryCondition = true;
         }
 
@@ -109,8 +110,7 @@ const getProducts = async (req, res, next) => {
             .limit(recordsPerPage);
 
         res.json({
-            products,
-            pageNum,
+            products, pageNum,
             paginationLinksNumber: Math.ceil(totalProducts / recordsPerPage),
         });
     } catch (error) {
@@ -148,7 +148,6 @@ const adminGetProducts = async (req, res, next) => {
     try {
         const products = await Product.find({}).sort({ category: 1 }).select('name price category');
         return res.json(products);
-        // res.json(products);
     } catch (error) {
         next(error);
     }
@@ -187,7 +186,7 @@ const adminUpload = async (req, res, next) => {
     }
     try {
         if (!req.files || !!req.files.images === false) {
-            return res.status(400).send("No files were uploaded.");
+            return res.status(400).send('No files were uploaded.');
         }
 
         const validateResult = imageValidate(req.files.images);
@@ -235,14 +234,10 @@ const adminUpdateProduct = async (req, res, next) => {
 
         product.attrs = [];
         if (attributesTable.length > 0) {
-            // product.attrs = [];
             attributesTable.map((item) => {
                 product.attrs.push(item);
             });
         }
-        // else {
-        //     product.attrs = [];
-        // }
 
         await product.save();
         res.json({ message: 'Product updated' });
@@ -254,9 +249,6 @@ const adminUpdateProduct = async (req, res, next) => {
 // * (for admin) middleware for delete requests
 const adminDeleteProduct = async (req, res, next) => {
     try {
-        // const product = await Product.findById(req.params.id).orFail();
-        // await product.deleteOne();
-
         const product = await Product.findByIdAndDelete(req.params.id).orFail();
 
         res.json({ message: 'product removed' });
@@ -286,8 +278,8 @@ const adminDeleteProductImage = async (req, res, next) => {
         });
         await Product.findOneAndUpdate(
             { _id: req.params.productId },
-            { $pull: { images: { path: imagePath } } })
-            .orFail();
+            { $pull: { images: { path: imagePath } } }
+        ).orFail();
         return res.end();
     } catch (error) {
         next(error);

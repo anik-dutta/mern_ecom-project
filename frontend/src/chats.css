@@ -5,10 +5,10 @@
     cursor: pointer;
     font-size: 24px;
     position: fixed;
-    right: 20px;
-    bottom: 40px;
-    width: 42px;
-    height: 42px;
+    right: 10px;
+    bottom: 78px;
+    width: 40px;
+    height: 40px;
     z-index: 2;
     display: flex;
     justify-content: center;
@@ -40,7 +40,7 @@
     opacity: 0;
     position: fixed;
     right: 20px;
-    bottom: 90px;
+    bottom: 120px;
     z-index: 2;
     width: 300px;
     transition: all 0.4s;
@@ -52,7 +52,6 @@
 .chat-header {
     background-color: rgb(23, 1, 51);
     padding: 11px;
-    margin-bottom: 5px;
     border-radius: 5px 5px 0px 0px;
     color: cyan;
 }
@@ -71,13 +70,13 @@
 }
 
 .chat-msg {
-    max-height: 300px;
+    max-height: 250px;
     overflow: auto;
 }
 
 .chat-text {
     border-radius: 0.65rem;
-    padding: 9.2px;
+    padding: 9px;
     background-color: rgb(23, 1, 51);
     font-size: 15px;
     overflow-wrap: break-word;

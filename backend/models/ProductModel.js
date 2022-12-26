@@ -17,11 +17,10 @@ const productSchema = new mongoose.Schema({
     count: { type: Number, required: true },
     price: { type: Number, required: true },
     rating: { type: Number },
-    reviewsNumber: { type: Number },
+    // reviewsNumber: { type: Number },
     sales: { type: Number, default: 0 },
     attrs: [
         { key: { type: String }, value: { type: String } }
-        // [{ key: "color", value: "red" }, { key: "size", value: "1 TB" }]
     ],
     images: [imageSchema],
     reviews: [{
@@ -29,7 +28,7 @@ const productSchema = new mongoose.Schema({
         ref: Review
     }]
 }, {
-    timestamps: true,
+    timestamps: true
 });
 
 // creating index 
