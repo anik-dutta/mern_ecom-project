@@ -75,7 +75,10 @@ export default function ProductListPageComponent(props) {
     useEffect(() => {
         getProducts(categoryName, pageNumParam, searchQuery, filters, sortOption)
             .then(result => {
-                setProducts(result.products);
+                // TODO
+                if (Array.isArray(result.product)) {
+                    setProducts(result.products);
+                }
                 setPaginationLinksNumber(result.paginationLinksNumber);
                 setPageNum(result.pageNum);
                 setLoading(false);

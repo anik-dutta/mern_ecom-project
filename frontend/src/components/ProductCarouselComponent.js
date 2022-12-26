@@ -4,10 +4,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function ProductCarouselComponent(props) {
-    const { bestSellers } = props;
+    const { bestSellers = [] } = props;
     const cursorP = { cursor: 'pointer' };
 
-    return bestSellers.length > 0 ? (
+    return Array.isArray(bestSellers) && bestSellers.length > 0 ? (
         <Carousel>
             {bestSellers.map((item, idx) => (
                 <Carousel.Item key={idx}>
