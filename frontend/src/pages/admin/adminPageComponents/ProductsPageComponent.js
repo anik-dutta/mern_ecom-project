@@ -9,14 +9,12 @@ import MetaComponent from '../../../components/MetaComponent';
 import AdminLinksComponent from '../../../components/adminComponents/AdminLinksComponent';
 import { logout } from '../../../redux/actions/userActions';
 
-export default function ProductsPageComponent(props) {
-    const { fetchProducts, deleteProduct } = props;
-
+export default function ProductsPageComponent({ fetchProducts, deleteProduct }) {
     const [products, setProducts] = useState([]);
     const [productDeleted, setProductDeleted] = useState(false);
 
-    const deleteHandler = async (productId, productName) => {
-        if (window.confirm(`Are you sure that you want to delete "${productName}"?`)) {
+    const deleteHandler = async (productId) => {
+        if (window.confirm('Are you sure that you want to delete this product?')) {
             const data = await deleteProduct(productId);
             if (data.message === 'product removed') {
                 setProductDeleted(!productDeleted);
@@ -31,9 +29,17 @@ export default function ProductsPageComponent(props) {
         fetchProducts(abctrl)
             .then(result => setProducts(result))
             .catch(err => {
+                // dispatch(logout());
+
                 if (err.message !== 'canceled') {
                     dispatch(logout());
                 }
+                // setProducts([
+                //     { name: err.response.data.message ? err.response.data.message : err.response.data }
+                // ]);
+                // console.log(
+                //     err.response && err.message ? err.response.data.message : err.message + ' ' + err.code
+                // );
             });
         return () => abctrl.abort();
     }, [productDeleted, dispatch, fetchProducts]);
@@ -85,7 +91,7 @@ export default function ProductsPageComponent(props) {
                                                     </Button>
                                                 </LinkContainer>
                                                 {" / "}
-                                                <Button className="btn-sm  btn-danger" onClick={() => deleteHandler(item._id, item.name)}>
+                                                <Button className="btn-sm  btn-danger" onClick={() => deleteHandler(item._id)}>
                                                     <i className="bi bi-trash" />
                                                 </Button>
                                             </td>

@@ -1,11 +1,9 @@
 // external imports
-import { useRef, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { useRef, useState } from "react";
+import { Form } from "react-bootstrap";
 import { useSelector } from 'react-redux';
 
-export default function CategoryFilterComponent(props) {
-    const { setCategoriesFromFilter } = props;
-
+export default function CategoryFilterComponent({ setCategoriesFromFilter }) {
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     const { categories } = useSelector(state => state.getCategories);
@@ -17,12 +15,12 @@ export default function CategoryFilterComponent(props) {
             return { ...items, [category.name]: e.target.checked };
         });
 
-        let selectedMainCategory = category.name.split('/')[0];
+        let selectedMainCategory = category.name.split("/")[0];
         let allCategories = myRefs.current.map((_, id) => {
             return { name: categories[id].name, idx: id };
         });
         let indexesOfMainCategory = allCategories.reduce((acc, item) => {
-            let cat = item.name.split('/')[0];
+            let cat = item.name.split("/")[0];
             if (selectedMainCategory === cat) {
                 acc.push(item.idx);
             }
@@ -30,19 +28,19 @@ export default function CategoryFilterComponent(props) {
         }, []);
 
         if (e.target.checked) {
-            setSelectedCategories((oldCategories) => [...oldCategories, 'cat']);
+            setSelectedCategories((oldCategories) => [...oldCategories, "cat"]);
             myRefs.current.map((_, idx) => {
                 if (!indexesOfMainCategory.includes(idx)) {
                     myRefs.current[idx].disabled = true;
                 }
-                return '';
+                return "";
             });
         } else {
             setSelectedCategories((oldCategories) => {
                 let a = [...oldCategories];
                 a.pop();
                 if (a.length === 0) {
-                    window.location.href = '/product-list';
+                    window.location.href = "/product-list";
                 }
                 return a;
             });
@@ -54,7 +52,7 @@ export default function CategoryFilterComponent(props) {
                 } else if (selectedCategories.length === 1) {
                     myRefs.current[idx2].disabled = false;
                 }
-                return '';
+                return "";
             });
         }
     };

@@ -1,6 +1,6 @@
 // external imports
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 // internal imports
 import { addToCart } from '../redux/actions/cartActions';

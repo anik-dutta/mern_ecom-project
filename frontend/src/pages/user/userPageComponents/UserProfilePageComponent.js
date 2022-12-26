@@ -1,20 +1,19 @@
 // external imports
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { useState, useEffect } from "react";
 
 // internal import
-import MetaComponent from '../../../components/MetaComponent';
+import MetaComponent from "../../../components/MetaComponent";
 
 export default function UserProfilePageComponent(props) {
     const { updateUserApiRequest, fetchUser, userInfoFromRedux, setReduxUserState, reduxDispatch, localStorage, sessionStorage } = props;
 
     const [validated, setValidated] = useState(false);
-    const [updateUserResponseState, setUpdateUserResponseState] = useState({ success: '', error: '' });
-    const [user, setUser] = useState({});
+    const [updateUserResponseState, setUpdateUserResponseState] = useState({
+        success: '', error: ''
+    });
     const [passwordMatchState, setPasswordMatchState] = useState(true);
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-
+    const [user, setUser] = useState({});
     const userInfo = userInfoFromRedux;
 
     useEffect(() => {
@@ -24,13 +23,9 @@ export default function UserProfilePageComponent(props) {
     }, [userInfo._id, fetchUser]);
 
     const handleOnChange = () => {
-        console.log(password);
-        const passwordField = document.querySelector('input[name=password]');
-        const confirmPasswordField = document.querySelector('input[name=confirmPassword]');
-        setPassword(passwordField.value.replace(/\s/g, ''));
-        setConfirmPassword(confirmPasswordField.value.replace(/\s/g, ''));
-
-        if (password === confirmPassword) {
+        const password = document.querySelector('input[name=password]');
+        const confirmPassword = document.querySelector('input[name=confirmPassword]');
+        if (confirmPassword.value === password.value) {
             setPasswordMatchState(true);
         } else {
             setPasswordMatchState(false);
@@ -42,14 +37,14 @@ export default function UserProfilePageComponent(props) {
         event.stopPropagation();
         const form = event.currentTarget.elements;
 
-        const name = form.name.value.trim();
-        const lastName = form.lastName.value.trim();
+        const name = form.name.value;
+        const lastName = form.lastName.value;
         const phoneNumber = form.phoneNumber.value;
-        const address = form.address.value.trim();
-        const country = form.country.value.trim();
-        const zipCode = form.zipCode.value.trim();
-        const city = form.city.value.trim();
-        const state = form.state.value.trim();
+        const address = form.address.value;
+        const country = form.country.value;
+        const zipCode = form.zipCode.value;
+        const city = form.city.value;
+        const state = form.state.value;
         const password = form.password.value;
         const confirmPassword = form.confirmPassword.value;
 
@@ -78,8 +73,7 @@ export default function UserProfilePageComponent(props) {
             <Container>
                 <Row className="mt-3 justify-content-md-center">
                     <Col md={6}>
-                        <h3 className="text-center mb-2">Profile</h3>
-                        <h6 className="text-center mb-1">Complete all the fields to place an order</h6>
+                        <h3>Your Profile</h3>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <Form.Group className="mb-2 mt-3" controlId="formBasicFirstName">
                                 <Form.Label>First Name</Form.Label>
@@ -93,7 +87,7 @@ export default function UserProfilePageComponent(props) {
                             </Form.Group>
                             <Form.Group className="mb-2" controlId="formBasicEmail">
                                 <Form.Label>Email Address</Form.Label>
-                                <Form.Control disabled defaultValue={user.email} />
+                                <Form.Control disabled value={user.email} />
                                 <Form.Text className="text-muted">Can not change the email address once an account has been created</Form.Text>
                             </Form.Group>
                             <Form.Group className="mb-2 mt-3" controlId="formBasicCountry">
@@ -115,7 +109,7 @@ export default function UserProfilePageComponent(props) {
                             </Form.Group>
                             <Form.Group className="mb-2 mt-3" controlId="formBasicZip">
                                 <Form.Label>Zip Code</Form.Label>
-                                <Form.Control required type="text" placeholder="Enter the Zip Code of your address" defaultValue={user.zipCode} name="zipCode" />
+                                <Form.Control type="text" placeholder="Enter the Zip Code of your address" defaultValue={user.zipCode} name="zipCode" />
                                 <Form.Control.Feedback type="invalid">Please provide the zip code</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className="mb-2 mt-3" controlId="formBasicPhone">
@@ -125,20 +119,19 @@ export default function UserProfilePageComponent(props) {
                             </Form.Group>
                             <Form.Group className="mb-2 mt-3" controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Enter a password" name="password" minLength={8} maxLength={20} onChange={handleOnChange} value={password} />
+                                <Form.Control required type="password" placeholder="Enter a password" name="password" minLength={8} onChange={handleOnChange} />
                                 <Form.Text className="text-muted">Password should contain at least 8 characters.</Form.Text>
                                 <Form.Control.Feedback type="invalid">Please enter a password</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className="mb-2 mt-3" controlId="formBasicPasswordRepeat">
                                 <Form.Label>Confirm Password</Form.Label>
-                                <Form.Control type="password" placeholder="Re-enter the password" name="confirmPassword" minLength={8} maxLength={20} onChange={handleOnChange} isInvalid={!passwordMatchState} value={confirmPassword} />
+                                <Form.Control required type="password" placeholder="Re-enter the password" name="confirmPassword" minLength={8} onChange={handleOnChange} isInvalid={!passwordMatchState} />
                                 <Form.Control.Feedback type="invalid">
                                     {!passwordMatchState === true ? <>Both passwords have to match</> : <>Enter the password again</>}
                                 </Form.Control.Feedback>
                             </Form.Group>
 
                             <Button type="submit" className="mb-3 mt-2 btn-warning">Update</Button>
-
                             <Alert variant="warning" show={updateUserResponseState && updateUserResponseState.success === 'User updated'}>
                                 Profile updated!
                             </Alert>

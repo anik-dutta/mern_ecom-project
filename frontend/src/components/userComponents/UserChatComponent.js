@@ -1,12 +1,12 @@
 // external imports 
 import { InputGroup, Button } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import socketIOClient from 'socket.io-client';
+import socketIOClient from "socket.io-client";
 
 // import css file
-// import '../../chats.css';
+import '../../chats.css';
 
 export default function UserChatComponent() {
     const [socket, setSocket] = useState(false);
@@ -17,16 +17,16 @@ export default function UserChatComponent() {
 
     const userInfo = useSelector((state) => state.userRegisterLogin.userInfo);
 
-    const clientChatMsg = useRef();
-    const chatMsg = useRef();
+    const clntMsg = useRef();
+    const chtmsg = useRef();
 
     useEffect(() => {
         if (!userInfo.isAdmin) {
             setReconnect(false);
-            let audio = new Audio('/audio/chat-msg.mp3');
+            let audio = new Audio("/audio/chat-msg.mp3");
 
             const socket = socketIOClient();
-            socket.on('no admin', (msg) => {
+            socket.on("no admin", (msg) => {
                 setChat((chat) => {
                     return [...chat, { admin: 'No admin is currently active' }];
                 });
@@ -39,13 +39,13 @@ export default function UserChatComponent() {
                 setMessageReceived(true);
                 audio.play();
 
-                const chatMessages = chatMsg.current;
+                const chatMessages = document.querySelector(".chat-msg");
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             });
             setSocket(socket);
             socket.on('admin closed the chat', () => {
                 setChat([]);
-                setChatConnectionInfo('Admin closed the conversation. Type again to start a conversation.');
+                setChatConnectionInfo("Admin closed the conversation. Type again to start a conversation.");
                 setReconnect(true);
             });
 
@@ -58,22 +58,27 @@ export default function UserChatComponent() {
         if (e.keyCode && e.keyCode !== 13) {
             return;
         }
-        setChatConnectionInfo('');
+        setChatConnectionInfo("");
         setMessageReceived(false);
 
-        let message = clientChatMsg.current.value.trim();
+        const msg = document.getElementById("clientChatMsg");
+        let v = msg.value.trim();
+        // let v = clntMsg.current.value.trim();
 
-        if (message === '' || message === null || message === false || !message) {
+        if (v === "" || v === null || v === false || !v) {
             return;
         }
-        socket.emit('client sends message', message);
+        socket.emit("client sends message", v);
         setChat((chat) => {
-            return [...chat, { client: message }];
+            return [...chat, { client: v }];
         });
-        clientChatMsg.current.focus();
+        msg.focus();
+        // clntMsg.current.focus();
         setTimeout(() => {
-            clientChatMsg.current.value = '';
-            const chatMessages = chatMsg.current;
+            msg.value = "";
+            // clntMsg.current.value = '';
+            const chatMessages = document.querySelector(".chat-msg");
+            // const chatMessages = chtmsg.current;
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }, 200);
     };
@@ -83,17 +88,20 @@ export default function UserChatComponent() {
             <input type="checkbox" id="check" />
             <label className="chat-btn" htmlFor="check">
                 <i className="bi bi-chat-dots-fill comment" />
+
                 {messageReceived && <span className="position-absolute top-0 start-50 translate-middle-y border border-light rounded-circle bg-warning notification"></span>}
+
                 <i className="bi bi-x close" />
             </label>
             <div className="chat-wrapper">
                 <div className="chat-header">
                     <h6>
-                        <i className="bi bi-info-circle me-1" />Support
+                        <i className="bi bi-info-circle me-1" />{" "}
+                        Support
                     </h6>
                 </div>
                 <div className="chat-form">
-                    <div className="chat-msg" ref={chatMsg}>
+                    <div className="chat-msg" ref={chtmsg}>
                         <p>{chatConnectionInfo}</p>
                         {chat.map((item, id) => (
                             <div key={id}>
@@ -111,9 +119,9 @@ export default function UserChatComponent() {
                         ))}
                     </div>
                     <InputGroup>
-                        <textarea id="clientChatMsg" className="form-control mt-2" placeholder="Message" onKeyUp={(e) => clientSubmitChatMsg(e)} ref={clientChatMsg} />
-                        <span className="mt-2 ms-1">
-                            <Button className=" btn-sm mt-3" onClick={(e) => clientSubmitChatMsg(e)}>Send</Button>
+                        <textarea id="clientChatMsg" className="form-control mt-3 mb-2" placeholder="Message" onKeyUp={(e) => clientSubmitChatMsg(e)} ref={clntMsg} />
+                        <span className="mt-3 ms-1">
+                            <Button className=" btn-sm" onClick={(e) => clientSubmitChatMsg(e)}>Send</Button>
                         </span>
                     </InputGroup>
                 </div>

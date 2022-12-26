@@ -1,9 +1,9 @@
 // external imports
-import axios from 'axios';
-import socketIOClient from 'socket.io-client';
+import axios from "axios";
+import socketIOClient from "socket.io-client";
 
 // internal import
-import AnalyticsPageComponent from './adminPageComponents/AnalyticsPageComponent';
+import AnalyticsPageComponent from "./adminPageComponents/AnalyticsPageComponent";
 
 const fetchOrdersForFirstDate = async (abctrl, firstDateToCompare) => {
     const { data } = await axios.get(`/api/orders/analysis/${firstDateToCompare}`, {

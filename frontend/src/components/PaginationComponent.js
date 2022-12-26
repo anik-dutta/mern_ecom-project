@@ -1,16 +1,15 @@
 // external import
-import { Pagination } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Pagination } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
-export default function PaginationComponent(props) {
-    const { categoryName, searchQuery, paginationLinksNumber, pageNum } = props;
-
-    const category = categoryName ? `category/${categoryName}/` : '';
-    const search = searchQuery ? `search/${searchQuery}/` : '';
+export default function PaginationComponent({ categoryName, searchQuery, paginationLinksNumber, pageNum }) {
+    const category = categoryName ? `category/${categoryName}/` : "";
+    const search = searchQuery ? `search/${searchQuery}/` : "";
     const url = `/product-list/${category}${search}`;
 
     return (
-        <Pagination className="mt-5">
+        <Pagination className="mt-5"
+        >
             <LinkContainer to={`${url}${pageNum - 1}`}>
                 <Pagination.Prev disabled={pageNum === 1} />
             </LinkContainer>

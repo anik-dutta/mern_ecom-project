@@ -1,9 +1,7 @@
 // external import
-import { Form } from 'react-bootstrap';
+import { Form } from "react-bootstrap";
 
-export default function PriceFilterComponent(props) {
-    const { price, setPrice } = props;
-
+export default function PriceFilterComponent({ price, setPrice }) {
     return (
         <>
             <Form.Label>

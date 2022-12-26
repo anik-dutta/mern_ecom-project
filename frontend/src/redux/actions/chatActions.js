@@ -1,5 +1,4 @@
-// internal import
-import * as actionTypes from '../constants/chatConstants';
+import * as actionTypes from "../constants/chatConstants";
 
 export const setChatRooms = (user, message) => async (dispatch) => {
     dispatch({

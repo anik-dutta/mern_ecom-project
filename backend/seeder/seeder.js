@@ -1,19 +1,19 @@
 require('dotenv').config();
 
-const connectDB = require('../config/db');
+const connectDB = require("../config/db");
 connectDB();
 
-const categoryData = require('./categories');
-const productData = require('./products');
-const reviewData = require('./reviews');
-const userData = require('./users');
-const orderData = require('./orders');
+const categoryData = require("./categories");
+const productData = require("./products");
+const reviewData = require("./reviews");
+const userData = require("./users");
+const orderData = require("./orders");
 
-const Category = require('../models/CategoryModel');
-const Product = require('../models/ProductModel');
-const Review = require('../models/ReviewModel');
-const User = require('../models/UserModel');
-const Order = require('../models/OrderModel');
+const Category = require("../models/CategoryModel");
+const Product = require("../models/ProductModel");
+const Review = require("../models/ReviewModel");
+const User = require("../models/UserModel");
+const Order = require("../models/OrderModel");
 
 const importData = async () => {
     try {
@@ -25,7 +25,7 @@ const importData = async () => {
         await Review.collection.deleteMany({});
         await User.collection.deleteMany({});
         await Order.collection.deleteMany({});
-        if (process.argv[2] !== '-d') {
+        if (process.argv[2] !== "-d") {
             await Category.insertMany(categoryData);
             const reviews = await Review.insertMany(reviewData);
             const sampleProducts = productData.map((product) => {
@@ -38,14 +38,14 @@ const importData = async () => {
             await User.insertMany(userData);
             await Order.insertMany(orderData);
 
-            console.log('Seeder data imported successfully');
+            console.log("Seeder data imported successfully");
             process.exit();
             return;
         }
-        console.log('Seeder data deleted successfully');
+        console.log("Seeder data deleted successfully");
         process.exit();
     } catch (error) {
-        console.error('Error while proccessing seeder data', error);
+        console.error("Error while proccessing seeder data", error);
         process.exit(1);
     }
 };

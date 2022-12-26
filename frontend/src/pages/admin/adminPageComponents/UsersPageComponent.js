@@ -9,16 +9,12 @@ import MetaComponent from '../../../components/MetaComponent';
 import AdminLinksComponent from '../../../components/adminComponents/AdminLinksComponent';
 import { logout } from '../../../redux/actions/userActions';
 
-export default function UsersPageComponent(props) {
-    const { fetchUsers, deleteUser } = props;
-
+export default function UsersPageComponent({ fetchUsers, deleteUser }) {
     const [users, setUsers] = useState([]);
     const [userDeleted, setuserDeleted] = useState(false);
 
-    const dispatch = useDispatch();
-
-    const deleteHandler = async (userId, userName, userLastname) => {
-        if (window.confirm(`Are you sure that you want to remove ${userName} ${userLastname}?`)) {
+    const deleteHandler = async (userId) => {
+        if (window.confirm('Are you sure that you want to remove this user?')) {
             const data = await deleteUser(userId);
             if (data === 'User deleted') {
                 setuserDeleted(!userDeleted);
@@ -26,17 +22,32 @@ export default function UsersPageComponent(props) {
         }
     };
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const abctrl = new AbortController();
         fetchUsers(abctrl)
-            .then(result => {
-                setUsers(result);
-            })
+            .then(result => setUsers(result))
             .catch(err => {
+                // dispatch(logout());
+
                 if (err.message !== 'canceled') {
                     dispatch(logout());
                 }
-            });
+
+                // TODO: below was used in project. will fix it later. All pageComponents have the same issue
+                // console.log(
+                //     err.response.data.message ? err.response.data.message : err.response.data
+                // );
+
+                // console.log(
+                //     err.response.data.message ? err.response.data.message : err.message
+                // );
+                // console.log(
+                //     err.response && err.message ? err.response.data.message : err.message + ' ' + err.code
+                // );
+            }
+            );
         return () => abctrl.abort();
     }, [userDeleted, fetchUsers, dispatch]);
 
@@ -85,7 +96,7 @@ export default function UsersPageComponent(props) {
                                                     </Button>
                                                 </LinkContainer>
                                                 {" / "}
-                                                <Button className="btn-sm btn-danger" onClick={() => deleteHandler(user._id, user.name, user.lastName)}>
+                                                <Button className="btn-sm btn-danger" onClick={() => deleteHandler(user._id)}>
                                                     <i className="bi bi-trash" />
                                                 </Button>
                                             </td>

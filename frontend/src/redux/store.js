@@ -1,13 +1,13 @@
 // external imports
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
 
 // internal imports
 import { cartReducer } from './reducers/cartReducers';
-import { userRegisterLoginReducer } from './reducers/userReducers';
-import { getCategoriesReducer } from './reducers/categoryReducers';
-import { adminChatReducer } from './reducers/adminChatReducer';
+import { userRegisterLoginReducer } from "./reducers/userReducers";
+import { getCategoriesReducer } from "./reducers/categoryReducers";
+import { adminChatReducer } from "./reducers/adminChatReducer";
 
 const reducer = combineReducers({
     cart: cartReducer,

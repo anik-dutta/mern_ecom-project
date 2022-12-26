@@ -7,8 +7,7 @@ import axios from 'axios';
 import UserChatComponent from './userComponents/UserChatComponent';
 import LoginPage from '../pages/LoginPage';
 
-export default function ProtectedRoutesComponent(props) {
-    const { admin } = props;
+export default function ProtectedRoutesComponent({ admin }) {
     const [isAuth, setIsAuth] = useState();
 
     useEffect(() => {
@@ -19,15 +18,23 @@ export default function ProtectedRoutesComponent(props) {
                 }
                 return isAuth;
             });
+        // .catch((err) => { });
     }, [isAuth]);
 
     if (isAuth === undefined) {
         return <LoginPage />;
     }
-    return isAuth && admin && isAuth !== 'admin' ? (<Navigate to='/login' />) : isAuth && admin ? (<Outlet />) : isAuth && !admin ? (
+    return isAuth && admin && isAuth !== 'admin' ? (<Navigate to="/login" />) : isAuth && admin ? (<Outlet />) : isAuth && !admin ? (
         <>
             <UserChatComponent />
             <Outlet />
         </>
-    ) : (<Navigate to='/login' />);
+    ) : (<Navigate to="/login" />);
+
+    // return isAuth && admin ? (<Outlet />) : isAuth && !admin ? (
+    //     <>
+    //         <UserChatComponent />
+    //         <Outlet />
+    //     </>
+    // ) : (<Navigate to="/login" />);
 }

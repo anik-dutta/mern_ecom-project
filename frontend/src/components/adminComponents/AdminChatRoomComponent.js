@@ -1,16 +1,15 @@
 // external imports
-import { Toast, Button, Form } from 'react-bootstrap';
-import { Fragment, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { Toast, Button, Form } from "react-bootstrap";
+import { Fragment, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 // internal import
-import { setMessageReceived } from '../../redux/actions/chatActions';
+import { setMessageReceived } from "../../redux/actions/chatActions";
 
-export default function AdminChatRoomComponent(props) {
-    const { chatRoom, roomIndex, socket, socketUser } = props;
+export default function AdminChatRoomComponent({ chatRoom, roomIndex, socket, socketUser }) {
     const dispatch = useDispatch();
 
-    [window['toast' + roomIndex], window['closeToast' + roomIndex]] = useState(true);
+    [window["toast" + roomIndex], window["closeToast" + roomIndex]] = useState(true);
     const [rerender, setRerender] = useState(false);
 
     useEffect(() => {
@@ -19,8 +18,8 @@ export default function AdminChatRoomComponent(props) {
     });
 
     const close = (socketId) => {
-        window['closeToast' + roomIndex](false);
-        socket.emit('admin closes chat', socketId);
+        window["closeToast" + roomIndex](false);
+        socket.emit("admin closes chat", socketId);
     };
 
     const adminSubmitChatMsg = (e, elem) => {
@@ -29,35 +28,33 @@ export default function AdminChatRoomComponent(props) {
             return;
         }
         const msg = document.getElementById(elem);
-        let message = msg.value.trim();
-        if (message === '' || message === null || message === false || !message) {
+        let v = msg.value.trim();
+        if (v === "" || v === null || v === false || !v) {
             return;
         }
         chatRoom[1].push({ admin: msg.value });
-        socket.emit('admin sends message', {
+        socket.emit("admin sends message", {
             user: socketUser,
-            message: message
+            message: v,
         });
         setRerender(!rerender);
         msg.focus();
         dispatch(setMessageReceived(false));
         setTimeout(() => {
-            msg.value = '';
+            msg.value = "";
             const chatMessages = document.querySelector(`.chat-msg${socketUser}`);
-            if (chatMessages) {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
+            if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
         }, 200);
     };
 
     return (
         <>
             <Toast show={'toast' + roomIndex} onClose={() => close(chatRoom[0])} className="admin-toast">
-                <Toast.Header className="chat-header mb-0" closeVariant="white">
+                <Toast.Header className="chat-header" closeVariant="white">
                     <strong className="me-auto"></strong>
                 </Toast.Header>
                 <Toast.Body>
-                    <div className={`chat-msg${socketUser}`} style={{ maxHeight: '300px', overflow: 'auto' }}>
+                    <div className={`chat-msg${socketUser}`} style={{ maxHeight: "300px", overflow: "auto" }}>
                         {chatRoom[1].map((msg, idx) => (
                             <Fragment key={idx}>
                                 {msg.client && (
@@ -75,8 +72,8 @@ export default function AdminChatRoomComponent(props) {
                     </div>
                     <Form>
                         <Form.Group
-                            className="mb-2" controlId={`adminChatMsg${roomIndex}`}>
-                            <Form.Control onKeyUp={(e) => adminSubmitChatMsg(e, `adminChatMsg${roomIndex}`)} className="mt-2" as="textarea" rows={2} placeholder="Message" />
+                            className="mb-3" controlId={`adminChatMsg${roomIndex}`}>
+                            <Form.Control onKeyUp={(e) => adminSubmitChatMsg(e, `adminChatMsg${roomIndex}`)} className="mt-3" as="textarea" rows={2} placeholder="Message" />
                         </Form.Group>
                         <Button onClick={(e) => adminSubmitChatMsg(e, `adminChatMsg${roomIndex}`)} className="admin-chat-send" type="submit">Send</Button>
                     </Form>

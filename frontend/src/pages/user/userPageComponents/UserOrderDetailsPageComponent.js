@@ -1,15 +1,13 @@
 // external imports
-import { Container, Row, Col, Form, Alert, ListGroup, Button } from 'react-bootstrap';
-import { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { Container, Row, Col, Form, Alert, ListGroup, Button } from "react-bootstrap";
+import { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 
 // internal imports
-import MetaComponent from '../../../components/MetaComponent';
+import MetaComponent from "../../../components/MetaComponent";
 import CardItemComponent from '../../../components/CardItemComponent';
 
-export default function UserOrderDetailsPageComponent(props) {
-    const { userInfo, getUser, getOrder, loadPayPalScript } = props;
-
+export default function UserOrderDetailsPageComponent({ userInfo, getUser, getOrder, loadPayPalScript }) {
     const [user, setUser] = useState({});
     const [paymentMethod, setPaymentMethod] = useState('');
     const [isPaid, setIsPaid] = useState(false);
@@ -75,7 +73,7 @@ export default function UserOrderDetailsPageComponent(props) {
         setOrderButtonMessage('Payment completed');
         setIsPaid(paidAt);
         setButtonDisabled(true);
-        paypalContainer.current.style = 'display:none';
+        paypalContainer.current.style = "display:none";
     };
 
     return (
@@ -88,7 +86,7 @@ export default function UserOrderDetailsPageComponent(props) {
                         <Row>
                             <Col md={6}>
                                 <h5>Shipping To</h5>
-                                <b>Name: </b>{user.name}{' '}{user.lastName}<br />
+                                <b>Name: </b> {user.name}{' '}{user.lastName}<br />
                                 <b>Address: </b>{user.address}{', '}{user.city}{', '}{user.state}{'-'}{user.zipCode}{', '}{user.country}<br />
                                 <b>Phone: </b>{user.phoneNumber}<br />
                             </Col>
@@ -96,17 +94,18 @@ export default function UserOrderDetailsPageComponent(props) {
                                 <h5>Payment Method</h5>
                                 <Form.Select disabled={true} value={paymentMethod}>
                                     <option value="pp">PayPal</option>
+                                    <option value="visa">Visa</option>
                                     <option value="cod">Cash on Delivery (delivery may be delayed)</option>
                                 </Form.Select>
                             </Col>
                             <Row>
                                 <Col>
-                                    <Alert className="mt-3" variant={isDelivered ? 'success' : 'danger'}>
+                                    <Alert className="mt-3" variant={isDelivered ? "success" : "danger"}>
                                         {isDelivered ? <>Delivered at {isDelivered}</> : <>Not Delivered</>}
                                     </Alert>
                                 </Col>
                                 <Col className="ms-4 pe-0">
-                                    <Alert className="mt-3" variant={isPaid ? 'success' : 'danger'}>
+                                    <Alert className="mt-3" variant={isPaid ? "success" : "danger"}>
                                         {isPaid ? <>Paid at {isPaid}</> : <>Not paid yet</>}
                                     </Alert>
                                 </Col>
@@ -145,7 +144,7 @@ export default function UserOrderDetailsPageComponent(props) {
                                 <div className="d-grid gap-2">
                                     <Button type="button" variant="warning" disabled={buttonDisabled} onClick={orderHandler}>{orderButtonMessage}</Button>
                                 </div>
-                                <div style={{ position: 'relative', zIndex: 1, marginTop: '1rem' }}>
+                                <div style={{ position: "relative", zIndex: 1, marginTop: "1rem" }}>
                                     <div ref={paypalContainer} id="paypal-container-element"></div>
                                 </div>
                             </ListGroup.Item>

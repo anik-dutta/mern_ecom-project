@@ -2,8 +2,7 @@
 import { Card, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-export default function CategoryCardComponent(props) {
-    const { category } = props;
+export default function CategoryCardComponent({ category, idx }) {
 
     return (
         <Card>
@@ -14,7 +13,7 @@ export default function CategoryCardComponent(props) {
                     {category.description}
                 </Card.Text>
                 <LinkContainer to={`/product-list/category/${category.name}`}>
-                    <Button variant="primary">Check out</Button>
+                    <Button variant="primary">Go to the Category</Button>
                 </LinkContainer>
             </Card.Body>
         </Card>

@@ -1,4 +1,4 @@
-// internal imports
+// internal import
 import { LOGIN_USER, LOGOUT_USER } from '../constants/userConstants';
 
 export function userRegisterLoginReducer(state = {}, action) {
@@ -8,10 +8,8 @@ export function userRegisterLoginReducer(state = {}, action) {
                 ...state,
                 userInfo: action.payload
             };
-
         case LOGOUT_USER:
             return {};
-
         default:
             return state;
     }

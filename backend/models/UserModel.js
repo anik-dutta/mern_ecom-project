@@ -13,11 +13,11 @@ const userSchema = mongoose.Schema({
     city: { type: String },
     state: { type: String },
     password: { type: String, required: true },
-    isAdmin: { type: Boolean, required: true, default: false }
+    isAdmin: { type: Boolean, required: true, default: false },
 }, {
-    timestamps: true
+    timestamps: true,
 });
 
 // creating model
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;

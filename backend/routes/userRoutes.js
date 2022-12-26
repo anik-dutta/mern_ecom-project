@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 // interal imports
-const { getAllUsers, registerUser, loginUser, updateUserProfile, getUserProfile, writeReview, getUser, updateUser, deleteUser } = require('../handlers/userHandler');
+const { getAllUsers, registerUser, loginUser, updateUserProfile, getUserProfile, writeReview, getUser, updateUser, deleteUser } = require("../handlers/userHandler");
 const { verifyLoggedIn, verifyAdmin } = require('../middlewares/verifyAuthToken');
 
 // * user routes
@@ -20,9 +20,8 @@ router.post('/review/:productId', writeReview);
 
 // * admin routes
 router.use(verifyAdmin);
-router.get('/', getAllUsers);
+router.get("/", getAllUsers);
 router.get('/:id', getUser);
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
-
 module.exports = router;

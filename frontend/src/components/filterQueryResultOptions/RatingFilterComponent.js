@@ -1,11 +1,9 @@
 // external imports
-import { Rating } from 'react-simple-star-rating';
-import { Form } from 'react-bootstrap';
-import { Fragment } from 'react';
+import { Rating } from "react-simple-star-rating";
+import { Form } from "react-bootstrap";
+import { Fragment } from "react";
 
-export default function RatingFilterComponent(props) {
-    const { setRatingFromFilter } = props;
-
+export default function RatingFilterComponent({ ratingFromFilter, setRatingFromFilter }) {
     return (
         <>
             <span className="fw-bold">Rating</span>
@@ -13,7 +11,7 @@ export default function RatingFilterComponent(props) {
                 <Fragment key={idx}>
                     <Form.Check type="checkbox" id={`check-api-${idx}`} >
                         <Form.Check.Input type="checkbox" isValid className="mt-2" onChange={e => setRatingFromFilter(items => { return { ...items, [5 - idx]: e.target.checked }; })} />
-                        <Form.Check.Label style={{ cursor: 'pointer' }}>
+                        <Form.Check.Label style={{ cursor: "pointer" }}>
                             <Rating readonly size={20} initialValue={5 - idx} />
                         </Form.Check.Label>
                     </Form.Check>

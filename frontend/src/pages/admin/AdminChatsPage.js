@@ -1,11 +1,11 @@
 // external imports
-import { Container, Row, Col } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { Container, Row, Col } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 // import admin components
-import MetaComponent from '../../components/MetaComponent';
+import MetaComponent from "../../components/MetaComponent";
 import AdminLinksComponent from '../../components/adminComponents/AdminLinksComponent';
-import AdminChatRoomComponent from '../../components/adminComponents/AdminChatRoomComponent';
+import AdminChatRoomComponent from "../../components/adminComponents/AdminChatRoomComponent";
 
 export default function AdminChartsPage() {
     const { chatRooms, socket } = useSelector((state) => state.adminChat);

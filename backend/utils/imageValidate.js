@@ -12,16 +12,14 @@ const imageValidate = (images) => {
     const imageSizeInBytes = 1048576;
     for (let image of imagesTable) {
         if (image.size > imageSizeInBytes) {
-            return { error: 'File size should be of size 1 MB at most' };
+            return { error: 'File larger than 1 MB' };
         }
         const filetypes = /jpg|jpeg|png/;
         const mimetype = filetypes.test(image.mimetype);
-
         if (!mimetype) {
             return { error: 'Image file should be of jpg, jpeg or png type' };
         }
     }
     return { error: false };
 };
-
 module.exports = imageValidate;

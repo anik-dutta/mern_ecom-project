@@ -1,15 +1,13 @@
 // external imports
-import { useState, Fragment, useRef } from 'react';
+import { useState, Fragment, useRef } from "react";
 import { Container, Row, Col, Button, Form, CloseButton, Table, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // internal imports
-import MetaComponent from '../../../components/MetaComponent';
+import MetaComponent from "../../../components/MetaComponent";
 import { changeCategory, setValuesForAttrFromDBSelectForm, setAttributesTableWrapper } from './utils/utils';
 
-export default function CreateProductPageComponent(props) {
-    const { createProductApiRequest, uploadImagesApiRequest, uploadImagesCloudinaryApiRequest, categories, reduxDispatch, newCategory, deleteCategory, saveAttributeToCategory, checkImage } = props;
-
+export default function CreateProductPageComponent({ createProductApiRequest, uploadImagesApiRequest, uploadImagesCloudinaryApiRequest, categories, reduxDispatch, newCategory, deleteCategory, saveAttributeToCategory }) {
     const [validated, setValidated] = useState(false);
     // * for select lists
     const [attributesFromDB, setAttributesFromDB] = useState([]);
@@ -18,9 +16,9 @@ export default function CreateProductPageComponent(props) {
     const [newAttrKey, setNewAttrKey] = useState(false);
     const [newAttrValue, setNewAttrValue] = useState(false);
     const [images, setImages] = useState(false);
-    const [isCreating, setIsCreating] = useState('');
-    const [createProductResponseState, setCreateProductResponseState] = useState({ message: '', error: '' });
-    const [categoryChosen, setCategoryChosen] = useState('Choose category');
+    const [isCreating, setIsCreating] = useState("");
+    const [createProductResponseState, setCreateProductResponseState] = useState({ message: "", error: "" });
+    const [categoryChosen, setCategoryChosen] = useState("Choose category");
 
     const navigate = useNavigate();
 
@@ -42,19 +40,23 @@ export default function CreateProductPageComponent(props) {
             category: form.category.value,
             attributesTable: attributesTable
         };
-
-        if (event.currentTarget.checkValidity() === true && !isCreating) {
+        if (event.currentTarget.checkValidity() === true) {
+            if (images.length > 3) {
+                setIsCreating("Maximum 3 images can be uploaded at once");
+                return;
+            }
             createProductApiRequest(formInputs)
                 .then(result => {
                     if (images) {
                         if (process.env.NODE_ENV !== 'production') {
                             uploadImagesApiRequest(images, result.productId)
                                 .then(res => { })
-                                .catch((err) => setIsCreating(err.response.data.message ? err.response.data.message : err.response.data));
+                                .catch((er) => setIsCreating(er.response.data.message ? er.response.data.message : er.response.data));
                         } else {
-                            uploadImagesCloudinaryApiRequest(images, result.productId, 'create');
+                            uploadImagesCloudinaryApiRequest(images, result.productId);
                         }
                     }
+
                     if (result.message === 'product created') {
                         navigate('/admin/products');
                     }
@@ -68,47 +70,35 @@ export default function CreateProductPageComponent(props) {
     };
 
     const imageUploadHandler = (images) => {
-        if (images) {
-            const data = checkImage(images, 'select');
-
-            if (data.error.length || data.error.size || data.error.type) {
-                let showError = data.error.length + data.error.size + data.error.type;
-                setIsCreating(showError);
-            } else {
-                setIsCreating('');
-            }
-            setImages(images);
-        }
+        setImages(images);
     };
 
     const newCategoryHandler = (e) => {
         if (e.keyCode && e.keyCode === 13 && e.target.value) {
             reduxDispatch(newCategory(e.target.value));
             setTimeout(() => {
-                let element = document.getElementById('cats');
+                let element = document.getElementById("cats");
                 setCategoryChosen(e.target.value);
                 element.value = e.target.value;
-                e.target.value = '';
+                e.target.value = "";
             }, 1000);
         }
     };
 
     const deleteCategoryHandler = () => {
-        let element = document.getElementById('cats');
+        let element = document.getElementById("cats");
         reduxDispatch(deleteCategory(element.value));
-        setCategoryChosen('Choose category');
+        setCategoryChosen("Choose category");
     };
 
     const attributeValueSelected = (e) => {
-        if (e.target.value !== 'Choose attribute value') {
+        if (e.target.value !== "Choose attribute value") {
             setAttributesTableWrapper(attrKey.current.value, e.target.value, setAttributesTable);
         }
     };
 
     const deleteAttribute = (key) => {
-        setAttributesTable((table) => {
-            table.filter((item) => item.key !== key);
-        });
+        setAttributesTable((table) => table.filter((item) => item.key !== key));
     };
 
     const newAttrKeyHandler = (e) => {
@@ -128,9 +118,9 @@ export default function CreateProductPageComponent(props) {
             if (newAttrKey && newAttrValue) {
                 reduxDispatch(saveAttributeToCategory(newAttrKey, newAttrValue, categoryChosen));
                 setAttributesTableWrapper(newAttrKey, newAttrValue, setAttributesTable);
-                e.target.value = '';
-                createdNewAttrKey.current.value = '';
-                createdNewAttrVal.current.value = '';
+                e.target.value = "";
+                createdNewAttrKey.current.value = "";
+                createdNewAttrVal.current.value = "";
                 setNewAttrKey(false);
                 setNewAttrValue(false);
             }
@@ -138,9 +128,7 @@ export default function CreateProductPageComponent(props) {
     };
 
     const checkKeyDown = (e) => {
-        if (e.code === 'Enter') {
-            e.preventDefault();
-        }
+        if (e.code === "Enter") e.preventDefault();
     };
 
     return (
@@ -157,7 +145,10 @@ export default function CreateProductPageComponent(props) {
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Description</Form.Label>
-                                <Form.Control name="description" required as="textarea" rows={3} />
+                                <Form.Control
+                                    name="description" required
+                                    as="textarea" rows={3}
+                                />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicCount">
                                 <Form.Label>Count in stock</Form.Label>
@@ -169,7 +160,7 @@ export default function CreateProductPageComponent(props) {
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicCategory">
                                 <Form.Label>
-                                    Category{' '}
+                                    Category{" "}
                                     <CloseButton onClick={deleteCategoryHandler} style={{ fontSize: '10px', padding: '2px' }} />(<small>remove selected category</small>)
                                 </Form.Label>
                                 <Form.Select
@@ -188,7 +179,7 @@ export default function CreateProductPageComponent(props) {
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicNewCategory">
                                 <Form.Label>
-                                    Or create a new category (e.g. Computers/Laptops/Books){' '}
+                                    Or create a new category (e.g. Computers/Laptops/Books){" "}
                                 </Form.Label>
                                 <Form.Control onKeyUp={newCategoryHandler} name="newCategory" type="text" />
                             </Form.Group>
@@ -214,7 +205,10 @@ export default function CreateProductPageComponent(props) {
                                         </Form.Group>
                                     </Col>
                                     <Col md={6}>
-                                        <Form.Group className="mb-3" controlId="formBasicAttributeValue">
+                                        <Form.Group
+                                            className="mb-3"
+                                            controlId="formBasicAttributeValue"
+                                        >
                                             <Form.Label>Attribute value</Form.Label>
                                             <Form.Select
                                                 onChange={attributeValueSelected}
@@ -273,7 +267,7 @@ export default function CreateProductPageComponent(props) {
                                     <Form.Group className="mb-3" controlId="formBasicNewAttributeValue">
                                         <Form.Label>Attribute value</Form.Label>
                                         <Form.Control ref={createdNewAttrVal}
-                                            disabled={['', 'Choose category'].includes(categoryChosen)}
+                                            disabled={["", "Choose category"].includes(categoryChosen)}
                                             placeholder="first choose or create category"
                                             required={newAttrKey}
                                             name="newAttrValue"
@@ -291,11 +285,10 @@ export default function CreateProductPageComponent(props) {
                             <Form.Group controlId="formFileMultiple" className="mb-3 mt-3">
                                 <Form.Label>Images</Form.Label>
                                 <Form.Control type="file" multiple onChange={(e) => imageUploadHandler(e.target.files)} />
-                                <Form.Text className="text-muted">Image file(s) should be of JPEG/JPG/PNG type and maximum 1 MB in size.</Form.Text>
                             </Form.Group>
 
                             {isCreating && <Alert>{isCreating}</Alert>}
-                            <Button className="btn-warning mt-3" type="submit" disabled={isCreating}><i className="bi bi-plus-circle-fill me-1" />Product</Button>
+                            <Button className="btn-warning mt-3" type="submit"><i className="bi bi-plus-circle-fill" />{" "}Product</Button>
 
                             {createProductResponseState.error && <Alert variant="danger">{createProductResponseState.error}</Alert>}
                         </Form>

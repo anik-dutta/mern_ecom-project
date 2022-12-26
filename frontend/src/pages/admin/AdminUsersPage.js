@@ -1,8 +1,8 @@
 // external import
-import axios from 'axios';
+import axios from "axios";
 
 // internal import
-import UsersPageComponent from './adminPageComponents/UsersPageComponent';
+import UsersPageComponent from "./adminPageComponents/UsersPageComponent";
 
 const fetchUsers = async (abctrl) => {
     const { data } = await axios.get('/api/users', {

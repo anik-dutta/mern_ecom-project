@@ -1,11 +1,10 @@
 // external import
-import { Form } from 'react-bootstrap';
+import { Form } from "react-bootstrap";
 
-export default function SortOptionsComponent(props) {
-    const { setSortOption } = props;
+export default function SortOptionsComponent({ setSortOption }) {
     return (
         <Form.Select aria-label="Default select example" onChange={e => setSortOption(e.target.value)}>
-            <option>Sort By</option>
+            <option>SORT BY</option>
             <option value="price_1">Price: Low To High</option>
             <option value="price_-1">Price: High To Low</option>
             <option value="rating_-1">Customer Rating</option>
