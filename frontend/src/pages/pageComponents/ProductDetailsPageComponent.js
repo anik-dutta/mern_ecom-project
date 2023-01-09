@@ -147,10 +147,10 @@ export default function ProductDetailsPageComponent(props) {
                             </Row>
                             <Row>
                                 <Col className="mt-5">
-                                    {/* {product.reviews.length !== 0 ? */}
-                                    <h5 className="text-success ms-3">Reviews</h5> :
-                                    {/* <h6 className="ms-3">Be the first person to review {product.name}</h6> */}
-                                    {/* } */}
+                                    {product.reviews.length !== 0 ?
+                                        <h5 className="text-success ms-3">Reviews</h5> :
+                                        <h6 className="ms-3">Be the first person to review {product.name}</h6>
+                                    }
                                     <ListGroup variant="flush">
                                         {product.reviews &&
                                             product.reviews.map((review, idx) => (

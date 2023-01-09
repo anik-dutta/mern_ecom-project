@@ -4,12 +4,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function ProductCarouselComponent(props) {
-    const { bestSellers = [] } = props;
+    const { bestSellers } = props;
     const cursorP = { cursor: 'pointer' };
 
-    return Array.isArray(bestSellers) && bestSellers.length > 0 ? (
+    return bestSellers.length > 0 ? (
         <Carousel>
-            {bestSellers.map((item, idx) => (
+            {bestSellers?.map((item, idx) => (
                 <Carousel.Item key={idx}>
                     <img crossOrigin="anonymous" className="d-block w-100" style={{ height: '300px', objectFit: 'cover' }} src={item.images ? item.images[0].path : null} alt="First slide" />
                     <Carousel.Caption>

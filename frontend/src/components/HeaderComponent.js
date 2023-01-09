@@ -29,7 +29,7 @@ export default function HeaderComponent() {
     }, [dispatch]);
 
     useEffect(() => {
-        if (userInfo.isAdmin) {
+        if (userInfo?.isAdmin) {
             let audio = new Audio('/audio/chat-msg.mp3');
             const socket = socketIOClient();
             socket.emit('admin connected with server', 'Admin' + Math.floor(Math.random() * 1000000000000));
@@ -75,7 +75,7 @@ export default function HeaderComponent() {
                         <InputGroup className="mb-1">
                             <DropdownButton id="dropdown-basic-button" title={searchCategoryToggle} >
                                 <Dropdown.Item onClick={() => setSearchCategoryToggle("All")}>All</Dropdown.Item>
-                                {categories.map((category, id) => (
+                                {categories?.map((category, id) => (
                                     <Dropdown.Item key={id} onClick={() => setSearchCategoryToggle(category.name)}>{category.name}</Dropdown.Item>
                                 ))}
                             </DropdownButton>
@@ -86,7 +86,7 @@ export default function HeaderComponent() {
                         </InputGroup>
                     </Nav>
                     <Nav>
-                        {userInfo.isAdmin ? (
+                        {userInfo?.isAdmin ? (
                             <LinkContainer to="/admin/orders">
                                 <Nav.Link>
                                     Admin
